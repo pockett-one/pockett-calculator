@@ -16,42 +16,46 @@ export default function Footer() {
       </div>
 
       {/* Main Footer Content */}
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-        <div className="pt-6 border-t border-gray-200 space-y-4">
-          {/* Brand */}
-          <div className="flex items-center justify-center gap-3">
-            <div className="w-10 h-10 bg-gradient-to-br from-gray-900 via-gray-800 to-gray-700 rounded-xl flex items-center justify-center shadow-lg">
-              <Calculator className="w-6 h-6 text-white" strokeWidth={2.5} />
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
+        <div className="pt-3 border-t border-gray-200">
+          <div className="flex flex-col sm:flex-row items-center justify-between gap-3">
+            {/* Left: Brand */}
+            <div className="flex items-center gap-2">
+              <div className="w-8 h-8 bg-gradient-to-br from-gray-900 via-gray-800 to-gray-700 rounded-xl flex items-center justify-center shadow-lg">
+                <Calculator className="w-5 h-5 text-white" strokeWidth={2.5} />
+              </div>
+              <div>
+                <h3 className="text-lg font-black gradient-text">Pockett Calculator</h3>
+                <p className="text-xs text-gray-500">Free Online Calculators</p>
+              </div>
             </div>
-            <div>
-              <h3 className="text-xl font-black gradient-text">Pockett Calculator</h3>
-              <p className="text-xs text-gray-500">Free Online Calculators</p>
-            </div>
-          </div>
 
-          {/* Links */}
-          <div className="flex flex-wrap items-center justify-center gap-4 text-sm">
-            <Link href="/privacy" className="text-gray-600 hover:text-gray-900 transition-colors">
-              Privacy Policy
-            </Link>
-            <span className="text-gray-300">•</span>
-            <Link href="/terms" className="text-gray-600 hover:text-gray-900 transition-colors">
-              Terms of Service
-            </Link>
-            <span className="text-gray-300">•</span>
-            <span className="flex items-center gap-1.5 text-gray-500">
-              <CheckCircle className="w-4 h-4 text-green-500" />
-              100% Free
-            </span>
-            <span className="text-gray-300">•</span>
-            <span className="flex items-center gap-1.5 text-gray-500">
-              <Shield className="w-4 h-4 text-blue-500" />
-              Secure
-            </span>
+            {/* Right: Links and Badges */}
+            <div className="flex flex-col sm:flex-row items-center gap-2 sm:gap-3">
+              <div className="flex items-center gap-2 text-sm">
+                <Link href="/privacy" className="text-gray-600 hover:text-gray-900 transition-colors">
+                  Privacy
+                </Link>
+                <span className="text-gray-300">•</span>
+                <Link href="/terms" className="text-gray-600 hover:text-gray-900 transition-colors">
+                  Terms
+                </Link>
+              </div>
+              <div className="flex items-center gap-2 text-sm">
+                <span className="flex items-center gap-1.5 text-gray-500">
+                  <CheckCircle className="w-4 h-4 text-green-500" />
+                  100% Free
+                </span>
+                <span className="flex items-center gap-1.5 text-gray-500">
+                  <Shield className="w-4 h-4 text-blue-500" />
+                  Secure
+                </span>
+              </div>
+            </div>
           </div>
 
           {/* Copyright */}
-          <p className="text-sm text-gray-600 text-center">
+          <p className="text-xs text-gray-600 text-center sm:text-right mt-2">
             © 2025 <span className="font-semibold text-gray-900">Pockett Calculator</span>. All rights reserved.
           </p>
         </div>
