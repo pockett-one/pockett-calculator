@@ -22,8 +22,10 @@ import {
   Zap,
   CheckCircle,
   Shield,
-  TrendingUp
+  TrendingUp,
+  Smartphone
 } from 'lucide-react';
+import CalculatorMenu from './components/CalculatorMenu';
 
 export default function Home() {
   const [display, setDisplay] = useState('0');
@@ -180,35 +182,29 @@ export default function Home() {
     <div className="min-h-screen">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
         <div className="grid lg:grid-cols-12 gap-8">
-          {/* Left Sidebar - Ad Space */}
-          <div className="hidden lg:block lg:col-span-2">
-            <div className="sticky top-24">
-              <div className="ad-slot" style={{ minHeight: '600px', width: '100%' }}>
-                <div className="writing-mode-vertical text-center">
-                  <div className="text-xs font-bold text-gray-400 mb-2">Ad</div>
-                  <div className="text-xs text-gray-400">160x600</div>
-                </div>
-              </div>
-            </div>
-          </div>
+          {/* Left Sidebar - Calculator Menu */}
+          <CalculatorMenu />
 
           {/* Main Content - Scientific Calculator + Content */}
-          <div className="lg:col-span-7 space-y-8">
-            {/* Hero Section */}
+          <div className="lg:col-span-6 space-y-8">
+      {/* Hero Section */}
             <div className="text-center space-y-4 py-8">
               <h1 className="text-5xl md:text-6xl font-black gradient-text tracking-tight">
                 Pockett Calculator
-              </h1>
+          </h1>
               <p className="text-xl text-gray-600 max-w-2xl mx-auto">
                 Lightning-fast, precision calculations at your fingertips. 
                 Professional tools for everyday math.
               </p>
-            </div>
+        </div>
 
             {/* Featured Scientific Calculator */}
-            <div className="premium-card rounded-3xl p-6 md:p-8">
+            <div className="premium-card rounded-3xl p-6 md:p-8 border-2 border-transparent hover:border-blue-200 transition-all duration-300">
               <div className="text-center mb-6">
-                <h2 className="text-2xl font-bold text-gray-900 mb-2">Scientific Calculator</h2>
+                <div className="inline-block bg-gradient-to-r from-blue-100 to-blue-200 px-4 py-1 rounded-full mb-3">
+                  <span className="text-sm font-bold text-blue-900">Featured Calculator</span>
+                </div>
+                <h2 className="text-2xl font-bold bg-gradient-to-r from-blue-600 to-blue-800 bg-clip-text text-transparent mb-2">Scientific Calculator</h2>
                 <p className="text-sm text-gray-600">Try it now - Full featured calculator with advanced functions</p>
               </div>
 
@@ -291,78 +287,84 @@ export default function Home() {
 
             {/* Math Calculators */}
             <div id="math-calculators" className="space-y-6">
-              <div>
-                <h2 className="text-3xl font-bold text-gray-900 mb-2">Math Calculators</h2>
-                <p className="text-gray-600">Advanced mathematical tools for complex calculations</p>
+              <div className="flex items-center gap-4">
+                <div className="h-1 w-12 bg-gradient-to-r from-blue-400 to-blue-600 rounded-full"></div>
+                <div>
+                  <h2 className="text-3xl font-bold bg-gradient-to-r from-blue-600 to-blue-800 bg-clip-text text-transparent mb-1">Math Calculators</h2>
+                  <p className="text-gray-600">Advanced mathematical tools for complex calculations</p>
+                </div>
               </div>
               <div className="flex flex-wrap gap-2">
                 {mathCalculators.map((calc) => (
                   <Link
                     key={calc.href}
                     href={calc.href}
-                    className="inline-flex items-center gap-2 px-4 py-2.5 bg-white hover:bg-gray-900 hover:text-white border border-gray-200 hover:border-gray-900 rounded-full text-sm font-semibold text-gray-700 transition-all duration-200 shadow-sm hover:shadow-md"
+                    className="inline-flex items-center gap-2 px-4 py-2.5 bg-white hover:bg-gradient-to-r hover:from-blue-500 hover:to-blue-600 hover:text-white border border-gray-200 hover:border-blue-500 rounded-full text-sm font-semibold text-gray-700 transition-all duration-200 shadow-sm hover:shadow-lg hover:scale-105"
                   >
                     <calc.Icon className="w-4 h-4" />
                     <span>{calc.name}</span>
-                  </Link>
+            </Link>
                 ))}
               </div>
             </div>
 
             {/* Other Calculators */}
             <div id="other-calculators" className="space-y-6">
-              <div>
-                <h2 className="text-3xl font-bold text-gray-900 mb-2">Other Calculators</h2>
-                <p className="text-gray-600">Everyday tools for practical calculations</p>
+              <div className="flex items-center gap-4">
+                <div className="h-1 w-12 bg-gradient-to-r from-red-300 to-red-500 rounded-full"></div>
+                <div>
+                  <h2 className="text-3xl font-bold bg-gradient-to-r from-red-500 to-red-700 bg-clip-text text-transparent mb-1">Other Calculators</h2>
+                  <p className="text-gray-600">Everyday tools for practical calculations</p>
+                </div>
               </div>
               <div className="flex flex-wrap gap-2">
                 {otherCalculators.map((calc) => (
                   <Link
                     key={calc.href}
                     href={calc.href}
-                    className="inline-flex items-center gap-2 px-4 py-2.5 bg-white hover:bg-gray-900 hover:text-white border border-gray-200 hover:border-gray-900 rounded-full text-sm font-semibold text-gray-700 transition-all duration-200 shadow-sm hover:shadow-md"
+                    className="inline-flex items-center gap-2 px-4 py-2.5 bg-white hover:bg-gradient-to-r hover:from-red-400 hover:to-red-500 hover:text-white border border-gray-200 hover:border-red-400 rounded-full text-sm font-semibold text-gray-700 transition-all duration-200 shadow-sm hover:shadow-lg hover:scale-105"
                   >
                     <calc.Icon className="w-4 h-4" />
                     <span>{calc.name}</span>
-                  </Link>
+            </Link>
                 ))}
-              </div>
-            </div>
+          </div>
+        </div>
 
-            {/* Features Section */}
-            <div id="features" className="premium-card rounded-3xl p-8 space-y-8">
+      {/* Features Section */}
+            <div id="features" className="premium-card rounded-3xl p-8 space-y-8 bg-gradient-to-br from-white via-blue-50/30 to-red-50/30">
               <h2 className="text-3xl font-bold text-gray-900 text-center">Why Choose Pockett Calculator?</h2>
               <div className="grid md:grid-cols-3 gap-8">
-                <div className="text-center space-y-3">
-                  <div className="feature-icon mx-auto">
-                    <Zap className="w-8 h-8 text-gray-700" />
+                <div className="text-center space-y-3 group">
+                  <div className="feature-icon mx-auto bg-gradient-to-br from-blue-100 to-blue-200 group-hover:from-blue-500 group-hover:to-blue-600 transition-all duration-300">
+                    <Zap className="w-8 h-8 text-blue-700 group-hover:text-white transition-colors duration-300" />
                   </div>
                   <h3 className="text-lg font-bold text-gray-900">Lightning Fast</h3>
                   <p className="text-sm text-gray-600">Instant calculations with zero lag</p>
                 </div>
-                <div className="text-center space-y-3">
-                  <div className="feature-icon mx-auto">
-                    <Shield className="w-8 h-8 text-gray-700" />
+                <div className="text-center space-y-3 group">
+                  <div className="feature-icon mx-auto bg-gradient-to-br from-red-100 to-red-200 group-hover:from-red-400 group-hover:to-red-500 transition-all duration-300">
+                    <CheckCircle className="w-8 h-8 text-red-700 group-hover:text-white transition-colors duration-300" />
                   </div>
                   <h3 className="text-lg font-bold text-gray-900">100% Accurate</h3>
                   <p className="text-sm text-gray-600">Precision you can trust</p>
                 </div>
-                <div className="text-center space-y-3">
-                  <div className="feature-icon mx-auto">
-                    <TrendingUp className="w-8 h-8 text-gray-700" />
+                <div className="text-center space-y-3 group">
+                  <div className="feature-icon mx-auto bg-gradient-to-br from-blue-100 to-blue-200 group-hover:from-blue-500 group-hover:to-blue-600 transition-all duration-300">
+                    <Smartphone className="w-8 h-8 text-blue-700 group-hover:text-white transition-colors duration-300" />
                   </div>
                   <h3 className="text-lg font-bold text-gray-900">Mobile Ready</h3>
                   <p className="text-sm text-gray-600">Works perfectly on any device</p>
                 </div>
               </div>
             </div>
-          </div>
+            </div>
 
           {/* Right Sidebar - Ad Space */}
           <div className="hidden lg:block lg:col-span-3">
             <div className="sticky top-24 space-y-6">
               <div className="ad-slot" style={{ minHeight: '250px' }}>
-                <div className="text-center">
+            <div className="text-center">
                   <div className="text-xs font-bold text-gray-400 mb-1">Advertisement</div>
                   <div className="text-xs text-gray-400">300x250</div>
                 </div>
@@ -371,7 +373,7 @@ export default function Home() {
                 <div className="text-center">
                   <div className="text-xs font-bold text-gray-400 mb-1">Advertisement</div>
                   <div className="text-xs text-gray-400">300x250</div>
-                </div>
+            </div>
               </div>
             </div>
           </div>

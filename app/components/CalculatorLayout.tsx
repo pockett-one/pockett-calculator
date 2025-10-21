@@ -19,6 +19,7 @@ import {
   Lock,
   ArrowLeftRight
 } from 'lucide-react';
+import CalculatorMenu from './CalculatorMenu';
 
 interface CalculatorLayoutProps {
   title: string;
@@ -92,20 +93,11 @@ export default function CalculatorLayout({
         </nav>
 
         <div className="grid lg:grid-cols-12 gap-8">
-          {/* Left Sidebar - Ad Space */}
-          <div className="hidden lg:block lg:col-span-2">
-            <div className="sticky top-24">
-              <div className="ad-slot" style={{ minHeight: '600px', width: '100%' }}>
-                <div className="writing-mode-vertical text-center">
-                  <div className="text-xs font-bold text-gray-400 mb-2">Ad</div>
-                  <div className="text-xs text-gray-400">160x600</div>
-                </div>
-              </div>
-            </div>
-          </div>
+          {/* Left Sidebar - Calculator Menu */}
+          <CalculatorMenu />
 
           {/* Main Content */}
-          <div className="lg:col-span-7 space-y-6">
+          <div className="lg:col-span-6 space-y-6">
             {/* Page Header */}
             <div className="text-center space-y-3">
               <h1 className="text-4xl md:text-5xl font-black gradient-text tracking-tight">
@@ -144,7 +136,7 @@ export default function CalculatorLayout({
 
           {/* Right Sidebar - Ad Space */}
           <div className="hidden lg:block lg:col-span-3">
-            <div className="sticky top-24 space-y-6">
+            <div className="sticky top-32 space-y-6">
               <div className="ad-slot" style={{ minHeight: '250px' }}>
                 <div className="text-center">
                   <div className="text-xs font-bold text-gray-400 mb-1">Advertisement</div>

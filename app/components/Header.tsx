@@ -143,16 +143,6 @@ export default function Header() {
           </nav>
         </div>
       </div>
-
-      {/* Top Ad Slot */}
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-3">
-        <div className="ad-slot" style={{ minHeight: '90px' }}>
-          <div className="text-center">
-            <div className="text-xs font-bold text-gray-400 mb-1">Advertisement</div>
-            <div className="text-xs text-gray-400">Google AdSense - Premium Banner (728x90)</div>
-          </div>
-        </div>
-      </div>
     </header>
   );
 }

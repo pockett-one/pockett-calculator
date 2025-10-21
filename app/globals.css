@@ -13,6 +13,7 @@
 
 html {
   scroll-behavior: smooth;
+  scroll-padding-top: 200px; /* Account for sticky header + ad banner height */
 }
 
 body {
@@ -28,6 +29,11 @@ body {
     line-height: 1.2;
     font-weight: 700;
     letter-spacing: -0.02em;
+  }
+
+  /* Ensure anchor targets account for sticky header + ad banner */
+  [id] {
+    scroll-margin-top: 200px;
   }
 }
 
