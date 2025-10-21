@@ -2,6 +2,7 @@
 
 import React, { useState } from 'react';
 import CalculatorLayout from '../components/CalculatorLayout';
+import { BookOpen, Lightbulb, Calculator as CalcIcon } from 'lucide-react';
 
 export default function FractionCalculatorPage() {
   const [num1, setNum1] = useState('');
@@ -165,25 +166,141 @@ export default function FractionCalculatorPage() {
           </div>
         )}
 
-        {/* Instructions */}
-        <div className="mt-8 p-6 bg-gray-50 rounded-2xl border border-gray-200">
-          <h3 className="text-lg font-bold text-gray-900 mb-3">How to Use</h3>
+        {/* Understanding Fractions */}
+        <div className="mt-8 p-6 bg-gradient-to-br from-blue-50 to-white rounded-2xl border border-blue-200">
+          <div className="flex items-center gap-2 mb-4">
+            <BookOpen className="w-5 h-5 text-blue-600" />
+            <h3 className="text-lg font-bold text-gray-900">Understanding Fractions</h3>
+          </div>
+          <div className="space-y-3 text-sm text-gray-700">
+            <p>
+              A fraction represents a part of a whole. It consists of a <strong>numerator</strong> (top number) 
+              and a <strong>denominator</strong> (bottom number). The denominator tells you how many equal parts 
+              the whole is divided into, and the numerator tells you how many of those parts you have.
+            </p>
+            <p className="font-mono text-center text-2xl text-gray-900 py-4">
+              <span className="text-blue-600">numerator</span> / <span className="text-red-600">denominator</span>
+            </p>
+          </div>
+        </div>
+
+        {/* Visual Representation */}
+        <div className="p-6 bg-gradient-to-br from-purple-50 to-white rounded-2xl border border-purple-200">
+          <h3 className="text-lg font-bold text-gray-900 mb-4">Visual Examples</h3>
+          <div className="grid md:grid-cols-2 gap-6">
+            {/* Example 1/2 */}
+            <div className="space-y-2">
+              <div className="text-center font-mono text-2xl font-bold text-gray-900">1/2</div>
+              <div className="flex gap-1 h-12">
+                <div className="flex-1 bg-blue-500 rounded-l-lg flex items-center justify-center text-white text-xs font-bold">1</div>
+                <div className="flex-1 bg-gray-200 rounded-r-lg flex items-center justify-center text-gray-500 text-xs">1</div>
+              </div>
+              <p className="text-xs text-gray-600 text-center">One half (1 out of 2 parts)</p>
+            </div>
+            {/* Example 3/4 */}
+            <div className="space-y-2">
+              <div className="text-center font-mono text-2xl font-bold text-gray-900">3/4</div>
+              <div className="flex gap-1 h-12">
+                <div className="flex-1 bg-blue-500 rounded-l-lg flex items-center justify-center text-white text-xs font-bold">1</div>
+                <div className="flex-1 bg-blue-500 flex items-center justify-center text-white text-xs font-bold">2</div>
+                <div className="flex-1 bg-blue-500 flex items-center justify-center text-white text-xs font-bold">3</div>
+                <div className="flex-1 bg-gray-200 rounded-r-lg flex items-center justify-center text-gray-500 text-xs">4</div>
+              </div>
+              <p className="text-xs text-gray-600 text-center">Three quarters (3 out of 4 parts)</p>
+            </div>
+          </div>
+        </div>
+
+        {/* Practical Examples */}
+        <div className="p-6 bg-gradient-to-br from-green-50 to-white rounded-2xl border border-green-200">
+          <div className="flex items-center gap-2 mb-4">
+            <Lightbulb className="w-5 h-5 text-green-600" />
+            <h3 className="text-lg font-bold text-gray-900">Practical Examples</h3>
+          </div>
+          <div className="space-y-4">
+            <div className="p-4 bg-white rounded-xl border border-green-100">
+              <div className="flex items-center gap-2 mb-2">
+                <CalcIcon className="w-4 h-4 text-green-600" />
+                <span className="font-semibold text-gray-900">Adding Fractions</span>
+              </div>
+              <div className="font-mono text-sm space-y-1">
+                <div><strong>1/2 + 1/4 = ?</strong></div>
+                <div className="text-gray-600">Step 1: Find common denominator → 2/4 + 1/4</div>
+                <div className="text-gray-600">Step 2: Add numerators → 3/4</div>
+                <div className="text-green-700 font-bold">Result: 3/4</div>
+              </div>
+            </div>
+
+            <div className="p-4 bg-white rounded-xl border border-blue-100">
+              <div className="flex items-center gap-2 mb-2">
+                <CalcIcon className="w-4 h-4 text-blue-600" />
+                <span className="font-semibold text-gray-900">Multiplying Fractions</span>
+              </div>
+              <div className="font-mono text-sm space-y-1">
+                <div><strong>2/3 × 3/4 = ?</strong></div>
+                <div className="text-gray-600">Step 1: Multiply numerators → 2 × 3 = 6</div>
+                <div className="text-gray-600">Step 2: Multiply denominators → 3 × 4 = 12</div>
+                <div className="text-gray-600">Step 3: Simplify → 6/12 = 1/2</div>
+                <div className="text-blue-700 font-bold">Result: 1/2</div>
+              </div>
+            </div>
+
+            <div className="p-4 bg-white rounded-xl border border-red-100">
+              <div className="flex items-center gap-2 mb-2">
+                <CalcIcon className="w-4 h-4 text-red-600" />
+                <span className="font-semibold text-gray-900">Dividing Fractions</span>
+              </div>
+              <div className="font-mono text-sm space-y-1">
+                <div><strong>1/2 ÷ 1/4 = ?</strong></div>
+                <div className="text-gray-600">Step 1: Flip the second fraction → 1/2 × 4/1</div>
+                <div className="text-gray-600">Step 2: Multiply → 4/2</div>
+                <div className="text-gray-600">Step 3: Simplify → 2</div>
+                <div className="text-red-700 font-bold">Result: 2</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        {/* Operation Rules */}
+        <div className="p-6 bg-gray-50 rounded-2xl border border-gray-200">
+          <h3 className="text-lg font-bold text-gray-900 mb-4">Fraction Operation Rules</h3>
+          <div className="grid md:grid-cols-2 gap-4 text-sm">
+            <div className="space-y-2">
+              <div className="font-semibold text-gray-900">Addition & Subtraction:</div>
+              <ul className="space-y-1 text-gray-700">
+                <li>• Find common denominator</li>
+                <li>• Add/subtract numerators</li>
+                <li>• Keep the denominator</li>
+                <li>• Simplify if possible</li>
+              </ul>
+            </div>
+            <div className="space-y-2">
+              <div className="font-semibold text-gray-900">Multiplication & Division:</div>
+              <ul className="space-y-1 text-gray-700">
+                <li>• Multiply: numerator × numerator</li>
+                <li>• Multiply: denominator × denominator</li>
+                <li>• Division: flip & multiply</li>
+                <li>• Simplify the result</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+
+        {/* Quick Tips */}
+        <div className="p-6 bg-gradient-to-br from-yellow-50 to-white rounded-2xl border border-yellow-200">
+          <h3 className="text-lg font-bold text-gray-900 mb-3">💡 Quick Tips</h3>
           <ul className="space-y-2 text-sm text-gray-700">
             <li className="flex items-start gap-2">
-              <span className="text-gray-400 mt-0.5">•</span>
-              <span>Enter the numerator and denominator for each fraction</span>
+              <span className="text-yellow-500 mt-0.5">▸</span>
+              <span><strong>Simplification:</strong> Always reduce fractions to their lowest terms by dividing by the GCD</span>
             </li>
             <li className="flex items-start gap-2">
-              <span className="text-gray-400 mt-0.5">•</span>
-              <span>Select the operation: Add (+), Subtract (−), Multiply (×), or Divide (÷)</span>
+              <span className="text-yellow-500 mt-0.5">▸</span>
+              <span><strong>Mixed Numbers:</strong> Convert to improper fractions before calculating (e.g., 1½ = 3/2)</span>
             </li>
             <li className="flex items-start gap-2">
-              <span className="text-gray-400 mt-0.5">•</span>
-              <span>Click Calculate to see the result in simplified form</span>
-            </li>
-            <li className="flex items-start gap-2">
-              <span className="text-gray-400 mt-0.5">•</span>
-              <span>Example: 1/2 + 1/4 = 3/4</span>
+              <span className="text-yellow-500 mt-0.5">▸</span>
+              <span><strong>Zero Denominator:</strong> Never allowed - division by zero is undefined</span>
             </li>
           </ul>
         </div>
