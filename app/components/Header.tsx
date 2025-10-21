@@ -59,17 +59,12 @@ export default function Header() {
         <div className="flex items-center justify-between gap-4 h-20">
           {/* Logo */}
           <Link href="/" className="flex items-center gap-3 group flex-shrink-0">
-            <div className="relative">
-              <div className="absolute inset-0 bg-gradient-to-r from-gray-900 to-gray-700 rounded-2xl blur-sm opacity-50 group-hover:opacity-75 transition-opacity"></div>
-              <div className="relative w-12 h-12 bg-gradient-to-br from-gray-900 via-gray-800 to-gray-700 rounded-2xl flex items-center justify-center shadow-lg group-hover:scale-110 transition-transform duration-300">
-                <Calculator className="w-7 h-7 text-white" strokeWidth={2.5} />
-              </div>
+            <div className="w-10 h-10 bg-gradient-to-br from-gray-900 via-gray-800 to-gray-700 rounded-xl flex items-center justify-center shadow-lg group-hover:scale-110 transition-transform duration-300">
+              <Calculator className="w-6 h-6 text-white" strokeWidth={2.5} />
             </div>
-            <div className="flex flex-col">
-              <span className="text-2xl font-black gradient-text tracking-tight">
-                Pockett
-              </span>
-              <span className="text-xs text-gray-500 font-semibold -mt-1">Calculator</span>
+            <div>
+              <h1 className="text-xl font-black gradient-text">Pockett Calculator</h1>
+              <p className="text-xs text-gray-500">Free Online Calculators</p>
             </div>
           </Link>
 
