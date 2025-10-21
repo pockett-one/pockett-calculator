@@ -26,6 +26,7 @@ import {
   Smartphone
 } from 'lucide-react';
 import CalculatorMenu from './components/CalculatorMenu';
+import StructuredData, { organizationSchema, websiteSchema } from './components/StructuredData';
 
 export default function Home() {
   const [display, setDisplay] = useState('0');
@@ -179,11 +180,16 @@ export default function Home() {
   ];
 
   return (
-    <div className="min-h-screen">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-        <div className="grid lg:grid-cols-12 gap-8">
-          {/* Left Sidebar - Calculator Menu */}
-          <CalculatorMenu />
+    <>
+      {/* Structured Data for SEO */}
+      <StructuredData data={organizationSchema} />
+      <StructuredData data={websiteSchema} />
+      
+      <div className="min-h-screen">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+          <div className="grid lg:grid-cols-12 gap-8">
+            {/* Left Sidebar - Calculator Menu */}
+            <CalculatorMenu />
 
           {/* Main Content - Scientific Calculator + Content */}
           <div className="lg:col-span-6 space-y-8">
@@ -380,5 +386,6 @@ export default function Home() {
         </div>
       </div>
     </div>
+    </>
   );
 }

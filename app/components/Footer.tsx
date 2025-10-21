@@ -16,10 +16,10 @@ export default function Footer() {
       </div>
 
       {/* Main Footer Content */}
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-        <div className="flex flex-col md:flex-row justify-between items-center gap-8 mb-8">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+        <div className="pt-6 border-t border-gray-200 space-y-4">
           {/* Brand */}
-          <div className="flex items-center gap-3">
+          <div className="flex items-center justify-center gap-3">
             <div className="w-10 h-10 bg-gradient-to-br from-gray-900 via-gray-800 to-gray-700 rounded-xl flex items-center justify-center shadow-lg">
               <Calculator className="w-6 h-6 text-white" strokeWidth={2.5} />
             </div>
@@ -30,7 +30,7 @@ export default function Footer() {
           </div>
 
           {/* Links */}
-          <div className="flex flex-wrap items-center justify-center gap-6 text-sm">
+          <div className="flex flex-wrap items-center justify-center gap-4 text-sm">
             <Link href="/privacy" className="text-gray-600 hover:text-gray-900 transition-colors">
               Privacy Policy
             </Link>
@@ -49,11 +49,9 @@ export default function Footer() {
               Secure
             </span>
           </div>
-        </div>
 
-        {/* Bottom Bar */}
-        <div className="pt-6 border-t border-gray-200 text-center">
-          <p className="text-sm text-gray-600">
+          {/* Copyright */}
+          <p className="text-sm text-gray-600 text-center">
             © 2025 <span className="font-semibold text-gray-900">Pockett Calculator</span>. All rights reserved.
           </p>
         </div>

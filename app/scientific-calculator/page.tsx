@@ -3,6 +3,7 @@
 import React, { useState } from 'react';
 import CalculatorLayout from '../components/CalculatorLayout';
 import { Lightbulb, Settings, Shapes, TrendingUp, DollarSign, Calculator as CalcIcon, Hash, BookOpen, Sparkles } from 'lucide-react';
+import StructuredData, { getCalculatorSchema, getBreadcrumbSchema } from '../components/StructuredData';
 
 export default function ScientificCalculatorPage() {
   const [display, setDisplay] = useState('0');
@@ -137,13 +138,28 @@ export default function ScientificCalculatorPage() {
     { name: 'Random Number', href: '/random-number-generator', icon: '🎲' },
   ];
 
+  const calculatorSchema = getCalculatorSchema(
+    "Scientific Calculator - Online Free Advanced Math Calculator",
+    "Free online scientific calculator with trigonometric functions (sin, cos, tan), logarithms, exponentials, square roots, and more. Perfect for students, engineers, and scientists.",
+    "https://pockettcalculator.com/scientific-calculator"
+  );
+
+  const breadcrumbSchema = getBreadcrumbSchema([
+    { name: "Home", url: "https://pockettcalculator.com" },
+    { name: "Scientific Calculator", url: "https://pockettcalculator.com/scientific-calculator" }
+  ]);
+
   return (
-    <CalculatorLayout
-      title="Scientific Calculator"
-      description="Advanced calculator with trigonometric, logarithmic, and exponential functions"
-      relatedCalculators={relatedCalculators}
-    >
-      <div className="space-y-6">
+    <>
+      <StructuredData data={calculatorSchema} />
+      <StructuredData data={breadcrumbSchema} />
+      
+      <CalculatorLayout
+        title="Scientific Calculator"
+        description="Advanced calculator with trigonometric, logarithmic, and exponential functions"
+        relatedCalculators={relatedCalculators}
+      >
+        <div className="space-y-6">
         {/* Display */}
         <div className="calc-display">
           {display}
@@ -377,5 +393,6 @@ export default function ScientificCalculatorPage() {
         </div>
       </div>
     </CalculatorLayout>
+    </>
   );
 }
