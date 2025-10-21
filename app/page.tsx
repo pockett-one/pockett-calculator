@@ -1,7 +1,7 @@
 'use client';
 
 import Link from 'next/link';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { 
   Calculator, 
   Percent, 
@@ -26,7 +26,8 @@ import {
   Smartphone
 } from 'lucide-react';
 import CalculatorMenu from './components/CalculatorMenu';
-import StructuredData, { organizationSchema, websiteSchema } from './components/StructuredData';
+import StructuredData, { organizationSchema, websiteSchema, getFAQSchema } from './components/StructuredData';
+import FAQ, { commonCalculatorFAQs } from './components/FAQ';
 
 export default function Home() {
   const [display, setDisplay] = useState('0');
@@ -34,6 +35,7 @@ export default function Home() {
   const [operation, setOperation] = useState<string | null>(null);
   const [newNumber, setNewNumber] = useState(true);
   const [isDegrees, setIsDegrees] = useState(true);
+  const [expression, setExpression] = useState('');
 
   const handleNumber = (num: string) => {
     if (newNumber) {
@@ -57,10 +59,12 @@ export default function Home() {
     const currentValue = parseFloat(display);
     if (previousValue === null) {
       setPreviousValue(currentValue);
+      setExpression(`${currentValue} ${op}`);
     } else if (operation) {
       const result = calculate(previousValue, currentValue, operation);
       setDisplay(String(result));
       setPreviousValue(result);
+      setExpression(`${result} ${op}`);
     }
     setOperation(op);
     setNewNumber(true);
@@ -81,6 +85,7 @@ export default function Home() {
     if (operation && previousValue !== null) {
       const currentValue = parseFloat(display);
       const result = calculate(previousValue, currentValue, operation);
+      setExpression(`${previousValue} ${operation} ${currentValue} =`);
       setDisplay(String(result));
       setPreviousValue(null);
       setOperation(null);
@@ -93,6 +98,7 @@ export default function Home() {
     setPreviousValue(null);
     setOperation(null);
     setNewNumber(true);
+    setExpression('');
   };
 
   const handleScientific = (func: string) => {
@@ -102,24 +108,24 @@ export default function Home() {
     const angleValue = isDegrees ? toRadians(value) : value;
 
     switch (func) {
-      case 'sin': result = Math.sin(angleValue); break;
-      case 'cos': result = Math.cos(angleValue); break;
-      case 'tan': result = Math.tan(angleValue); break;
-      case 'sin⁻¹': result = isDegrees ? Math.asin(value) * (180 / Math.PI) : Math.asin(value); break;
-      case 'cos⁻¹': result = isDegrees ? Math.acos(value) * (180 / Math.PI) : Math.acos(value); break;
-      case 'tan⁻¹': result = isDegrees ? Math.atan(value) * (180 / Math.PI) : Math.atan(value); break;
-      case 'π': result = Math.PI; break;
-      case 'e': result = Math.E; break;
-      case 'x²': result = value * value; break;
-      case 'x³': result = value * value * value; break;
-      case 'eˣ': result = Math.exp(value); break;
-      case '10ˣ': result = Math.pow(10, value); break;
-      case '√x': result = Math.sqrt(value); break;
-      case '∛x': result = Math.cbrt(value); break;
-      case 'ln': result = Math.log(value); break;
-      case 'log': result = Math.log10(value); break;
-      case '1/x': result = 1 / value; break;
-      case 'n!': result = factorial(Math.floor(value)); break;
+      case 'sin': result = Math.sin(angleValue); setExpression(`sin(${value})`); break;
+      case 'cos': result = Math.cos(angleValue); setExpression(`cos(${value})`); break;
+      case 'tan': result = Math.tan(angleValue); setExpression(`tan(${value})`); break;
+      case 'sin⁻¹': result = isDegrees ? Math.asin(value) * (180 / Math.PI) : Math.asin(value); setExpression(`sin⁻¹(${value})`); break;
+      case 'cos⁻¹': result = isDegrees ? Math.acos(value) * (180 / Math.PI) : Math.acos(value); setExpression(`cos⁻¹(${value})`); break;
+      case 'tan⁻¹': result = isDegrees ? Math.atan(value) * (180 / Math.PI) : Math.atan(value); setExpression(`tan⁻¹(${value})`); break;
+      case 'π': result = Math.PI; setExpression('π'); break;
+      case 'e': result = Math.E; setExpression('e'); break;
+      case 'x²': result = value * value; setExpression(`${value}²`); break;
+      case 'x³': result = value * value * value; setExpression(`${value}³`); break;
+      case 'eˣ': result = Math.exp(value); setExpression(`e^${value}`); break;
+      case '10ˣ': result = Math.pow(10, value); setExpression(`10^${value}`); break;
+      case '√x': result = Math.sqrt(value); setExpression(`√${value}`); break;
+      case '∛x': result = Math.cbrt(value); setExpression(`∛${value}`); break;
+      case 'ln': result = Math.log(value); setExpression(`ln(${value})`); break;
+      case 'log': result = Math.log10(value); setExpression(`log(${value})`); break;
+      case '1/x': result = 1 / value; setExpression(`1/${value}`); break;
+      case 'n!': result = factorial(Math.floor(value)); setExpression(`${Math.floor(value)}!`); break;
     }
     setDisplay(String(result));
     setNewNumber(true);
@@ -132,6 +138,55 @@ export default function Home() {
     for (let i = 2; i <= n; i++) result *= i;
     return result;
   };
+
+  // Keyboard input handler
+  useEffect(() => {
+    const handleKeyDown = (event: KeyboardEvent) => {
+      const key = event.key;
+
+      // Prevent default for calculator keys to avoid page scrolling or other browser actions
+      if (/^[0-9+\-*/=.]$/.test(key) || key === 'Enter' || key === 'Escape' || key.toLowerCase() === 'c') {
+        event.preventDefault();
+      }
+
+      // Number keys (0-9)
+      if (/^[0-9]$/.test(key)) {
+        handleNumber(key);
+      }
+
+      // Decimal point
+      else if (key === '.') {
+        handleDecimal();
+      }
+
+      // Operators
+      else if (key === '+') {
+        handleOperation('+');
+      }
+      else if (key === '-') {
+        handleOperation('–');
+      }
+      else if (key === '*') {
+        handleOperation('×');
+      }
+      else if (key === '/') {
+        handleOperation('/');
+      }
+
+      // Equals
+      else if (key === 'Enter' || key === '=') {
+        handleEquals();
+      }
+
+      // Clear
+      else if (key === 'Escape' || key.toLowerCase() === 'c') {
+        handleClear();
+      }
+    };
+
+    window.addEventListener('keydown', handleKeyDown);
+    return () => window.removeEventListener('keydown', handleKeyDown);
+  }, [display, previousValue, operation, newNumber]);
 
   const CalcButton = ({ children, onClick, className = '', variant = 'default' }: {
     children: React.ReactNode;
@@ -184,6 +239,7 @@ export default function Home() {
       {/* Structured Data for SEO */}
       <StructuredData data={organizationSchema} />
       <StructuredData data={websiteSchema} />
+      <StructuredData data={getFAQSchema(commonCalculatorFAQs)} />
       
       <div className="min-h-screen">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
@@ -215,13 +271,13 @@ export default function Home() {
               </div>
 
               {/* Calculator Display */}
-              <div className="calc-display mb-6 min-h-[80px] flex items-center justify-end">
-                {display}
-                {operation && previousValue !== null && (
-                  <div className="absolute top-4 right-4 text-sm text-gray-500">
-                    {previousValue} {operation}
-                  </div>
-                )}
+              <div className="calc-display mb-6 min-h-[80px] flex flex-col items-end justify-end p-4 relative">
+                <div className="text-sm text-gray-400 mb-1 font-mono h-5">
+                  {expression || '\u00A0'}
+                </div>
+                <div className="text-3xl md:text-4xl font-bold">
+                  {display}
+                </div>
               </div>
 
               {/* Scientific Functions */}
@@ -363,6 +419,18 @@ export default function Home() {
                   <p className="text-sm text-gray-600">Works perfectly on any device</p>
                 </div>
               </div>
+            </div>
+
+            {/* FAQ Section */}
+            <div id="faq" className="space-y-6">
+              <div className="flex items-center gap-4">
+                <div className="h-1 w-12 bg-gradient-to-r from-green-400 to-green-600 rounded-full"></div>
+                <div>
+                  <h2 className="text-3xl font-bold bg-gradient-to-r from-green-600 to-green-800 bg-clip-text text-transparent mb-1">Frequently Asked Questions</h2>
+                  <p className="text-gray-600">Everything you need to know about our calculators</p>
+                </div>
+              </div>
+              <FAQ items={commonCalculatorFAQs} />
             </div>
             </div>
 
