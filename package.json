@@ -13,7 +13,7 @@
     "test:ci": "jest --ci --coverage --maxWorkers=2",
     "test:e2e": "playwright test",
     "test:e2e:ui": "playwright test --ui",
-    "test:e2e:smoke": "playwright test --grep 'should load|should navigate|should input numbers|should perform addition' --max-failures=3",
+    "test:e2e:smoke": "playwright test --grep @smoke --max-failures=3",
     "test:all": "npm run test && npm run test:e2e"
   },
   "dependencies": {
