@@ -14,8 +14,8 @@ test.describe('Comprehensive Keyboard Input Tests', () => {
       await page.locator('.calc-display, [class*="calc-display"]').first().click();
     }
     
-    // Wait a bit for focus to settle
-    await page.waitForTimeout(100);
+    // Wait for focus to be applied
+    await expect(calculatorContainer).toBeFocused();
   });
 
   test('should handle all number keys (0-9)', async ({ page }) => {
