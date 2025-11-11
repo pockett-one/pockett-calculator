@@ -1,22 +1,32 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useState, useRef } from 'react';
 import CalculatorLayout from '../components/CalculatorLayout';
-import { Lightbulb, Settings, Shapes, TrendingUp, DollarSign, Calculator as CalcIcon, Hash, BookOpen, Sparkles } from 'lucide-react';
+import { Lightbulb, Settings, Shapes, TrendingUp, DollarSign, Hash, BookOpen, Sparkles } from 'lucide-react';
 import StructuredData, { getCalculatorSchema, getBreadcrumbSchema } from '../components/StructuredData';
+import { useCalculatorKeyboard } from '../lib/useCalculatorKeyboard';
 
 export default function ScientificCalculatorPage() {
   const [display, setDisplay] = useState('0');
   const [previousValue, setPreviousValue] = useState<string | null>(null);
   const [operation, setOperation] = useState<string | null>(null);
   const [newNumber, setNewNumber] = useState(true);
+  const calculatorRef = useRef<HTMLDivElement>(null);
 
   const handleNumber = (num: string) => {
     if (newNumber) {
       setDisplay(num);
       setNewNumber(false);
     } else {
-      setDisplay(display === '0' ? num : display + num);
+      // Always append numbers, but if display is "0" and num is "0", keep it as "0"
+      if (display === '0' && num === '0') {
+        setDisplay('0');
+      } else if (display === '0') {
+        // If display is "0" and num is not "0", append to allow leading zeros
+        setDisplay(display + num);
+      } else {
+        setDisplay(display + num);
+      }
     }
   };
 
@@ -105,6 +115,17 @@ export default function ScientificCalculatorPage() {
     setNewNumber(true);
   };
 
+  // Enable keyboard input when calculator is in focus
+  useCalculatorKeyboard({
+    onNumber: handleNumber,
+    onDecimal: handleDecimal,
+    onOperation: handleOperation,
+    onEquals: handleEquals,
+    onClear: handleClear,
+    onScientific: handleScientific,
+    calculatorRef,
+  });
+
   const Button = ({ children, onClick, className = '', variant = 'default' }: { 
     children: React.ReactNode; 
     onClick: () => void; 
@@ -159,7 +180,7 @@ export default function ScientificCalculatorPage() {
         description="Advanced calculator with trigonometric, logarithmic, and exponential functions"
         relatedCalculators={relatedCalculators}
       >
-        <div className="space-y-6">
+        <div ref={calculatorRef} className="space-y-6">
         {/* Display */}
         <div className="calc-display">
           {display}
@@ -391,7 +412,7 @@ export default function ScientificCalculatorPage() {
             </div>
           </div>
         </div>
-      </div>
+        </div>
     </CalculatorLayout>
     </>
   );

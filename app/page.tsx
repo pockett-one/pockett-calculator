@@ -21,8 +21,6 @@ import {
   ArrowLeftRight,
   Zap,
   CheckCircle,
-  Shield,
-  TrendingUp,
   Smartphone
 } from 'lucide-react';
 import CalculatorMenu from './components/CalculatorMenu';
@@ -186,6 +184,7 @@ export default function Home() {
 
     window.addEventListener('keydown', handleKeyDown);
     return () => window.removeEventListener('keydown', handleKeyDown);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [display, previousValue, operation, newNumber]);
 
   const CalcButton = ({ children, onClick, className = '', variant = 'default' }: {

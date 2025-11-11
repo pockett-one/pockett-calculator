@@ -18,7 +18,7 @@ export default function TimeCalculatorPage() {
     const h2 = parseInt(hours2) || 0;
     const m2 = parseInt(minutes2) || 0;
 
-    let totalMinutes = operation === 'add'
+    const totalMinutes = operation === 'add'
       ? (h1 * 60 + m1) + (h2 * 60 + m2)
       : (h1 * 60 + m1) - (h2 * 60 + m2);
 
