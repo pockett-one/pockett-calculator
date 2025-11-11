@@ -37,7 +37,11 @@ test.describe('Calculator Functionality Tests', () => {
     // Input: 10 - 4 = 6
     await page.click('button:has-text("1")');
     await page.click('button:has-text("0")');
-    await page.click('button:has-text("−"), button:has-text("-")');
+    try {
+      await page.click('button:has-text("−")');
+    } catch (e) {
+      await page.click('button:has-text("-")');
+    }
     await page.click('button:has-text("4")');
     await page.click('button:has-text("=")');
     
