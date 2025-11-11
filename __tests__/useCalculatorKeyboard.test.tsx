@@ -29,6 +29,7 @@ function TestCalculator() {
   };
 
   const handleOperation = (op: string) => {
+    setPreviousValue(display);
     setOperation(op);
     setNewNumber(true);
   };
