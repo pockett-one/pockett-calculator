@@ -89,7 +89,7 @@ test.describe('Calculator Functionality Tests', () => {
     await page.click('button:has-text("6")');
     
     // Clear
-    await page.click('button:has-text("C"), button:has-text("AC")');
+    await page.locator('button').filter({ hasText: /^(C|AC)$/ }).click();
     
     const display = page.locator('.calc-display, [class*="calc-display"]').first();
     await expect(display).toContainText('0');
