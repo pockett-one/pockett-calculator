@@ -206,7 +206,7 @@ export default function PrivacyPolicyPage() {
                 <h2 className="text-xl font-bold text-gray-900 mb-2">Contact Us</h2>
                 <p className="text-gray-700 leading-relaxed">
                   If you have any questions about this Privacy Policy or our privacy practices, please contact us through 
-                  our website or email us at <a href="mailto:privacy@pockettcalculator.com" className="text-blue-600 hover:underline font-semibold">privacy@pockettcalculator.com</a>
+                  our website or email us at <a href="mailto:info@pockett.io" className="text-blue-600 hover:underline font-semibold">info@pockett.io</a>
                 </p>
               </div>
             </div>
