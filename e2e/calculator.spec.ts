@@ -34,14 +34,25 @@ test.describe('Calculator Functionality Tests', () => {
   });
 
   test('should perform subtraction', async ({ page }) => {
+    // Clear first
+    await page.locator('button').filter({ hasText: /^(C|AC|Clear)$/ }).first().click();
+    
     // Input: 10 - 4 = 6
     await page.click('button:has-text("1")');
     await page.click('button:has-text("0")');
+    // Wait a bit for display to update
+    await page.waitForTimeout(100);
+    
     // Try different subtraction button texts
     const minusButton = page.locator('button').filter({ hasText: /^[−-]$/ }).first();
     await minusButton.click();
+    await page.waitForTimeout(100);
+    
     await page.click('button:has-text("4")');
+    await page.waitForTimeout(100);
+    
     await page.click('button:has-text("=")');
+    await page.waitForTimeout(200);
     
     const display = page.locator('.calc-display, [class*="calc-display"]').first();
     await expect(display).toContainText('6');
@@ -73,11 +84,16 @@ test.describe('Calculator Functionality Tests', () => {
   test('should handle decimal input', async ({ page }) => {
     // Clear first to ensure clean state
     await page.locator('button').filter({ hasText: /^(C|AC|Clear)$/ }).first().click();
+    await page.waitForTimeout(100);
     
     await page.click('button:has-text("3")');
+    await page.waitForTimeout(50);
     await page.click('button:has-text(".")');
+    await page.waitForTimeout(50);
     await page.click('button:has-text("1")');
+    await page.waitForTimeout(50);
     await page.click('button:has-text("4")');
+    await page.waitForTimeout(100);
     
     const display = page.locator('.calc-display, [class*="calc-display"]').first();
     await expect(display).toContainText('3.14');

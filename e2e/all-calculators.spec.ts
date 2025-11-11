@@ -50,8 +50,10 @@ test.describe('All Calculators - Navigation Tests', () => {
       const link = page.locator(`a[href="${calculator.path}"]`).first();
       
       if (await link.count() > 0) {
-        await link.click();
-        await expect(page).toHaveURL(new RegExp(calculator.path.replace('/', '\\/')));
+        await Promise.all([
+          page.waitForURL(new RegExp(calculator.path.replace('/', '\\/'))),
+          link.click(),
+        ]);
       } else {
         // If link not found on homepage, test direct navigation
         await page.goto(calculator.path);
