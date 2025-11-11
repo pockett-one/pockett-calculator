@@ -31,7 +31,6 @@ jobs:
         uses: codecov/codecov-action@v4
         if: always()
         with:
-          files: ./coverage/coverage-final.json
           fail_ci_if_error: false
 
   e2e-tests:
