@@ -172,7 +172,7 @@ export default function ScientificCalculatorPage() {
         description="Advanced calculator with trigonometric, logarithmic, and exponential functions"
         relatedCalculators={relatedCalculators}
       >
-        <div ref={calculatorRef} className="space-y-6" tabIndex={0}>
+        <div ref={calculatorRef} className="space-y-6">
         {/* Display */}
         <div className="calc-display">
           {display}
