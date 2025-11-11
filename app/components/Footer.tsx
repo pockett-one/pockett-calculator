@@ -33,6 +33,10 @@ export default function Footer() {
             {/* Right: Links and Badges */}
             <div className="flex flex-col sm:flex-row items-center gap-2 sm:gap-3">
               <div className="flex items-center gap-2 text-sm">
+                <Link href="/faq" className="text-gray-600 hover:text-gray-900 transition-colors">
+                  FAQ
+                </Link>
+                <span className="text-gray-300">•</span>
                 <Link href="/privacy" className="text-gray-600 hover:text-gray-900 transition-colors">
                   Privacy
                 </Link>

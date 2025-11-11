@@ -6,6 +6,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
   // Static pages
   const staticPages = [
     '',
+    '/faq',
     '/privacy',
     '/terms',
   ]
@@ -34,7 +35,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     url: `${baseUrl}${page}`,
     lastModified: new Date(),
     changeFrequency: 'monthly' as const,
-    priority: page === '' ? 1 : 0.8,
+    priority: page === '' ? 1 : page === '/faq' ? 0.9 : 0.8,
   }))
   
   const calculatorEntries = calculatorPages.map((page) => ({

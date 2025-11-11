@@ -277,8 +277,8 @@ export default function TermsOfServicePage() {
                 <h2 className="text-xl font-bold text-gray-900 mb-2">Contact Us</h2>
                 <p className="text-gray-700 leading-relaxed">
                   If you have any questions about these Terms of Service, please contact us at{' '}
-                  <a href="mailto:legal@pockettcalculator.com" className="text-blue-600 hover:underline font-semibold">
-                    legal@pockettcalculator.com
+                  <a href="mailto:info@pockett.io" className="text-blue-600 hover:underline font-semibold">
+                    info@pockett.io
                   </a>
                 </p>
               </div>

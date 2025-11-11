@@ -423,14 +423,25 @@ export default function Home() {
 
             {/* FAQ Section */}
             <div id="faq" className="space-y-6">
-              <div className="flex items-center gap-4">
-                <div className="h-1 w-12 bg-gradient-to-r from-green-400 to-green-600 rounded-full"></div>
-                <div>
-                  <h2 className="text-3xl font-bold bg-gradient-to-r from-green-600 to-green-800 bg-clip-text text-transparent mb-1">Frequently Asked Questions</h2>
-                  <p className="text-gray-600">Everything you need to know about our calculators</p>
+              <div className="flex items-center justify-between">
+                <div className="flex items-center gap-4">
+                  <div className="h-1 w-12 bg-gradient-to-r from-green-400 to-green-600 rounded-full"></div>
+                  <div>
+                    <h2 className="text-3xl font-bold bg-gradient-to-r from-green-600 to-green-800 bg-clip-text text-transparent mb-1">Frequently Asked Questions</h2>
+                    <p className="text-gray-600">Quick answers to common calculator questions</p>
+                  </div>
                 </div>
               </div>
-              <FAQ items={commonCalculatorFAQs} />
+              <FAQ items={commonCalculatorFAQs.slice(0, 6)} />
+              <div className="text-center pt-4">
+                <Link
+                  href="/faq"
+                  className="inline-flex items-center gap-2 px-6 py-3 bg-gradient-to-r from-green-500 to-green-600 text-white font-semibold rounded-xl hover:from-green-600 hover:to-green-700 transition-all shadow-md hover:shadow-lg"
+                >
+                  View All {commonCalculatorFAQs.length} Questions
+                  <ArrowLeftRight className="w-5 h-5 rotate-90" />
+                </Link>
+              </div>
             </div>
             </div>
 
