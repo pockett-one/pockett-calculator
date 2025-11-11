@@ -7,56 +7,56 @@ test.describe('Navigation Tests', () => {
 
   test('should navigate to homepage', async ({ page }) => {
     await expect(page).toHaveTitle(/Pockett Calculator/);
-    await expect(page.locator('h1')).toContainText('Pockett Calculator');
+    await expect(page.getByRole('heading', { name: 'Pockett Calculator', exact: true }).first()).toBeVisible();
   });
 
   test('should navigate to scientific calculator', async ({ page }) => {
     await page.click('a[href="/scientific-calculator"]');
     await expect(page).toHaveURL(/.*scientific-calculator/);
-    await expect(page.locator('h1, h2')).toContainText(/Scientific Calculator/i);
+    await expect(page.getByRole('heading', { name: /Scientific Calculator/i })).toBeVisible();
   });
 
   test('should navigate to percentage calculator', async ({ page }) => {
     await page.click('a[href="/percentage-calculator"]');
     await expect(page).toHaveURL(/.*percentage-calculator/);
-    await expect(page.locator('h1, h2')).toContainText(/Percentage Calculator/i);
+    await expect(page.getByRole('heading', { name: /Percentage Calculator/i })).toBeVisible();
   });
 
   test('should navigate to fraction calculator', async ({ page }) => {
     await page.click('a[href="/fraction-calculator"]');
     await expect(page).toHaveURL(/.*fraction-calculator/);
-    await expect(page.locator('h1, h2')).toContainText(/Fraction Calculator/i);
+    await expect(page.getByRole('heading', { name: /Fraction Calculator/i })).toBeVisible();
   });
 
   test('should navigate to age calculator', async ({ page }) => {
     await page.click('a[href="/age-calculator"]');
     await expect(page).toHaveURL(/.*age-calculator/);
-    await expect(page.locator('h1, h2')).toContainText(/Age Calculator/i);
+    await expect(page.getByRole('heading', { name: /Age Calculator/i })).toBeVisible();
   });
 
   test('should navigate to FAQ page', async ({ page }) => {
     await page.click('a[href="/faq"]');
     await expect(page).toHaveURL(/.*faq/);
-    await expect(page.locator('h1')).toContainText(/Frequently Asked Questions/i);
+    await expect(page.getByRole('heading', { name: /Frequently Asked Questions/i })).toBeVisible();
   });
 
   test('should navigate to privacy page', async ({ page }) => {
     await page.click('a[href="/privacy"]');
     await expect(page).toHaveURL(/.*privacy/);
-    await expect(page.locator('h1, h2')).toContainText(/Privacy Policy/i);
+    await expect(page.getByRole('heading', { name: 'Privacy Policy', exact: true })).toBeVisible();
   });
 
   test('should navigate to terms page', async ({ page }) => {
     await page.click('a[href="/terms"]');
     await expect(page).toHaveURL(/.*terms/);
-    await expect(page.locator('h1, h2')).toContainText(/Terms of Service/i);
+    await expect(page.getByRole('heading', { name: /Terms of Service/i })).toBeVisible();
   });
 
   test('should navigate back to homepage from calculator', async ({ page }) => {
     await page.goto('/scientific-calculator');
     await page.click('a[href="/"]');
     await expect(page).toHaveURL('/');
-    await expect(page.locator('h1')).toContainText('Pockett Calculator');
+    await expect(page.getByRole('heading', { name: 'Pockett Calculator', exact: true }).first()).toBeVisible();
   });
 
   test('should have working header navigation', async ({ page }) => {

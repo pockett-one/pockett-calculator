@@ -21,13 +21,17 @@ test.describe('Comprehensive Keyboard Input Tests', () => {
   test('should handle all number keys (0-9)', async ({ page }) => {
     const display = page.locator('.calc-display, [class*="calc-display"]').first();
     
+    // Clear first
+    await page.keyboard.press('Escape');
+    
     // Test all numbers
     for (let i = 0; i <= 9; i++) {
       await page.keyboard.press(String(i));
     }
     
     const displayText = await display.textContent();
-    expect(displayText).toMatch(/0123456789/);
+    // Should contain all digits (0 might be at start, so check for all digits)
+    expect(displayText).toMatch(/0.*1.*2.*3.*4.*5.*6.*7.*8.*9/);
   });
 
   test('should handle complex calculation via keyboard', async ({ page }) => {

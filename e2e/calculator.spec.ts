@@ -37,17 +37,14 @@ test.describe('Calculator Functionality Tests', () => {
     // Input: 10 - 4 = 6
     await page.click('button:has-text("1")');
     await page.click('button:has-text("0")');
-    try {
-      await page.click('button:has-text("−")');
-    } catch (e) {
-      await page.click('button:has-text("-")');
-    }
+    // Try different subtraction button texts
+    const minusButton = page.locator('button').filter({ hasText: /^[−-]$/ }).first();
+    await minusButton.click();
     await page.click('button:has-text("4")');
     await page.click('button:has-text("=")');
     
     const display = page.locator('.calc-display, [class*="calc-display"]').first();
-    const displayText = await display.textContent();
-    expect(displayText).toMatch(/6/);
+    await expect(display).toContainText('6');
   });
 
   test('should perform multiplication', async ({ page }) => {
@@ -74,6 +71,9 @@ test.describe('Calculator Functionality Tests', () => {
   });
 
   test('should handle decimal input', async ({ page }) => {
+    // Clear first to ensure clean state
+    await page.locator('button').filter({ hasText: /^(C|AC|Clear)$/ }).first().click();
+    
     await page.click('button:has-text("3")');
     await page.click('button:has-text(".")');
     await page.click('button:has-text("1")');

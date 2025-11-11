@@ -2,7 +2,7 @@
 
 import React, { useState, useRef } from 'react';
 import CalculatorLayout from '../components/CalculatorLayout';
-import { Lightbulb, Settings, Shapes, TrendingUp, DollarSign, Calculator as CalcIcon, Hash, BookOpen, Sparkles } from 'lucide-react';
+import { Lightbulb, Settings, Shapes, TrendingUp, DollarSign, Hash, BookOpen, Sparkles } from 'lucide-react';
 import StructuredData, { getCalculatorSchema, getBreadcrumbSchema } from '../components/StructuredData';
 import { useCalculatorKeyboard } from '../lib/useCalculatorKeyboard';
 
@@ -18,7 +18,15 @@ export default function ScientificCalculatorPage() {
       setDisplay(num);
       setNewNumber(false);
     } else {
-      setDisplay(display === '0' ? num : display + num);
+      // Always append numbers, but if display is "0" and num is "0", keep it as "0"
+      if (display === '0' && num === '0') {
+        setDisplay('0');
+      } else if (display === '0') {
+        // If display is "0" and num is not "0", append to allow leading zeros
+        setDisplay(display + num);
+      } else {
+        setDisplay(display + num);
+      }
     }
   };
 

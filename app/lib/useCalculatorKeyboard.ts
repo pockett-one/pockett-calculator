@@ -36,12 +36,14 @@ export function useCalculatorKeyboard({
         const calculatorElement = calculatorRef.current;
         if (!calculatorElement) return;
         
-        // Check if the active element is within the calculator or if calculator was recently clicked
+        // Check if the active element is within the calculator
         const activeElement = document.activeElement;
-        const isWithinCalculator = calculatorElement.contains(activeElement);
         
-        // Also check if calculator was recently focused
-        if (!isWithinCalculator && !isFocusedRef.current) {
+        // Also check if calculator element itself is focused
+        const isCalculatorFocused = calculatorElement === activeElement || calculatorElement.contains(activeElement);
+        
+        // Only process if calculator is focused
+        if (!isCalculatorFocused && !isFocusedRef.current) {
           return;
         }
       }
@@ -66,8 +68,11 @@ export function useCalculatorKeyboard({
       }
 
       // Number keys (0-9) - both regular and numpad
-      if (/^[0-9]$/.test(key) || (keyCode >= 96 && keyCode <= 105)) {
-        const num = key.length === 1 ? key : String(keyCode - 96);
+      if (/^[0-9]$/.test(key)) {
+        onNumber(key);
+      } else if (keyCode >= 96 && keyCode <= 105) {
+        // Numpad 0-9: keyCode 96 = Numpad0, 97 = Numpad1, ..., 105 = Numpad9
+        const num = String(keyCode - 96);
         onNumber(num);
       }
 
@@ -77,21 +82,21 @@ export function useCalculatorKeyboard({
       }
 
       // Operators
-      else if (key === '+' || keyCode === 107) {
+      else if (key === '+' || keyCode === 107) { // NumpadAdd
         onOperation('+');
       }
-      else if (key === '-' || keyCode === 109 || keyCode === 189) {
+      else if (key === '-' || keyCode === 109 || keyCode === 189) { // NumpadSubtract or Minus
         onOperation('-');
       }
-      else if (key === '*' || keyCode === 106 || (keyCode === 56 && event.shiftKey)) {
+      else if (key === '*' || keyCode === 106 || (keyCode === 56 && event.shiftKey)) { // NumpadMultiply
         onOperation('×');
       }
-      else if (key === '/' || keyCode === 111 || keyCode === 191) {
+      else if (key === '/' || keyCode === 111 || keyCode === 191) { // NumpadDivide or Slash
         onOperation('÷');
       }
 
       // Equals
-      else if (key === 'Enter' || key === '=' || keyCode === 13) {
+      else if (key === 'Enter' || key === '=' || keyCode === 13 || keyCode === 187) {
         onEquals();
       }
 
@@ -152,8 +157,8 @@ export function useCalculatorKeyboard({
 
     return () => {
       window.removeEventListener('keydown', handleKeyDown);
-      if (calculatorRef?.current) {
-        const calculatorElement = calculatorRef.current;
+      const calculatorElement = calculatorRef?.current;
+      if (calculatorElement) {
         calculatorElement.removeEventListener('focus', handleFocus, true);
         calculatorElement.removeEventListener('blur', handleBlur, true);
         calculatorElement.removeEventListener('click', handleClick);

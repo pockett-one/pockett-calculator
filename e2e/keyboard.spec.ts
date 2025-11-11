@@ -132,7 +132,10 @@ test.describe('Keyboard Input Tests', () => {
   test('should support numpad keys', async ({ page }) => {
     const display = page.locator('.calc-display, [class*="calc-display"]').first();
     
-    // Test numpad numbers (Playwright simulates these as regular keys)
+    // Clear first
+    await page.keyboard.press('Escape');
+    
+    // Test numpad numbers
     await page.keyboard.press('Numpad1');
     await page.keyboard.press('Numpad2');
     await page.keyboard.press('Numpad3');
@@ -142,6 +145,9 @@ test.describe('Keyboard Input Tests', () => {
 
   test('should support numpad operators', async ({ page }) => {
     const display = page.locator('.calc-display, [class*="calc-display"]').first();
+    
+    // Clear first
+    await page.keyboard.press('Escape');
     
     await page.keyboard.press('Numpad5');
     await page.keyboard.press('NumpadAdd');
@@ -155,19 +161,26 @@ test.describe('Keyboard Input Tests', () => {
   test('should not interfere when calculator is not focused', async ({ page }) => {
     const display = page.locator('.calc-display, [class*="calc-display"]').first();
     
-    // Click outside calculator (on header)
+    // Clear first to ensure we start at 0
+    await page.keyboard.press('Escape');
+    await expect(display).toContainText('0');
+    
+    // Click outside calculator (on header) to blur it
     await page.locator('header').click();
+    // Wait a bit for blur to register
+    await page.waitForTimeout(200);
     
     // Try typing - should not affect calculator
     await page.keyboard.press('9');
     await page.keyboard.press('9');
     await page.keyboard.press('9');
     
-    // Display should still show 0 (or previous value if any)
+    // Display should still show 0 (calculator wasn't focused)
     const displayText = await display.textContent();
     // If calculator wasn't focused, these keys shouldn't have been processed
     // This test verifies keyboard input only works when focused
     expect(displayText).not.toContain('999');
+    expect(displayText).toContain('0');
   });
 });
 
