@@ -109,7 +109,7 @@ test.describe('Calculator Functionality Tests', () => {
   test('should perform scientific functions - square', async ({ page }) => {
     // Input: 5² = 25
     await page.click('button:has-text("5")');
-    await page.click('button:has-text("x²"), button:has-text("²")');
+    await page.locator('button').filter({ hasText: /^(x²|²)$/ }).click();
     
     const display = page.locator('.calc-display, [class*="calc-display"]').first();
     await expect(display).toContainText('25');
