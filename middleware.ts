@@ -6,12 +6,14 @@ export const config = {
   matcher: '/sitemap.xml',
 };
 
+const SEARCH_BOT_PATTERN = /Googlebot|bingbot|Slurp|DuckDuckBot|Baiduspider|YandexBot|Sogou|Exabot|facebot|ia_archiver/i;
+
 export function middleware(request: NextRequest) {
   const response = NextResponse.next();
   
   // Detect Googlebot and other search engine crawlers
   const userAgent = request.headers.get('user-agent') || '';
-  const isSearchEngineBot = /Googlebot|bingbot|Slurp|DuckDuckBot|Baiduspider|YandexBot|Sogou|Exabot|facebot|ia_archiver/i.test(userAgent);
+  const isSearchEngineBot = SEARCH_BOT_PATTERN.test(userAgent);
 
   if (isSearchEngineBot) {
     // For search engines: force fresh responses to ensure HTTP 200
