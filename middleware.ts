@@ -9,10 +9,11 @@ export const config = {
 export function middleware(_request: NextRequest) {
   const response = NextResponse.next();
 
-  // Set fresh-fetch headers
-  response.headers.set('Cache-Control', 'no-cache, no-store, must-revalidate');
-  response.headers.set('Pragma', 'no-cache');
-  response.headers.set('Expires', '0');
+  // Allow caching for performance while ensuring freshness
+  // max-age=3600: browsers cache for 1 hour
+  // s-maxage=3600: CDN/proxies cache for 1 hour
+  // must-revalidate: require revalidation after cache expires
+  response.headers.set('Cache-Control', 'public, max-age=3600, s-maxage=3600, must-revalidate');
 
   return response;
 }
