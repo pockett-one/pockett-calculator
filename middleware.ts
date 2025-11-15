@@ -19,7 +19,6 @@ export function middleware(request: NextRequest) {
     // public: allows caching after validation
     response.headers.set('Cache-Control', 'public, no-cache, must-revalidate');
     // Remove ETag to prevent conditional requests that result in 304
-    response.headers.delete('etag');
     response.headers.delete('ETag');
   } else {
     // For regular users: allow caching for performance
