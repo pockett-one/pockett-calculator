@@ -9,24 +9,30 @@ export const config = {
 const SEARCH_BOT_PATTERN = /Googlebot|bingbot|Slurp|DuckDuckBot|Baiduspider|YandexBot|Sogou|Exabot|facebot|ia_archiver/i;
 
 export function middleware(request: NextRequest) {
-  const response = NextResponse.next();
-  
   // Detect Googlebot and other search engine crawlers
   const userAgent = request.headers.get('user-agent') || '';
   const isSearchEngineBot = SEARCH_BOT_PATTERN.test(userAgent);
 
   if (isSearchEngineBot) {
-    // For search engines: force fresh responses to ensure HTTP 200
-    // no-cache: always revalidate (prevents 304 responses)
-    // public: allows caching after validation
-    response.headers.set('Cache-Control', 'no-store, no-cache, must-revalidate');
-    // Remove ETag to prevent conditional requests that result in 304
+    // For search engines: force fresh HTTP 200 responses (not 304)
+    const response = NextResponse.next();
+    
+    // no-store: prevents any caching (ensures fresh response every time)
+    // This prevents the server from returning 304 (Not Modified) responses
+    response.headers.set('Cache-Control', 'no-store, no-cache, must-revalidate, proxy-revalidate');
+    
+    // Remove response headers that enable conditional requests (ETag, Last-Modified)
+    // Without these headers, the server cannot generate 304 responses
+    // HTTP headers are case-insensitive, so we only need to delete once
     response.headers.delete('ETag');
-  } else {
-    // For regular users: allow caching for performance
-    response.headers.set('Cache-Control', 'public, max-age=3600, s-maxage=3600, must-revalidate');
+    response.headers.delete('Last-Modified');
+    
+    return response;
   }
-
+  
+  // For regular users: allow caching for performance
+  const response = NextResponse.next();
+  response.headers.set('Cache-Control', 'public, max-age=3600, s-maxage=3600, must-revalidate');
   return response;
 }
 
