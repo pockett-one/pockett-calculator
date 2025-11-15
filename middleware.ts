@@ -6,7 +6,7 @@ export const config = {
   matcher: '/sitemap.xml',
 };
 
-export function middleware(request: NextRequest) {
+export function middleware(_request: NextRequest) {
   const response = NextResponse.next();
 
   // Set fresh-fetch headers
