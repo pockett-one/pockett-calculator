@@ -19,7 +19,7 @@ export function middleware(request: NextRequest) {
     // For search engines: force fresh responses to ensure HTTP 200
     // no-cache: always revalidate (prevents 304 responses)
     // public: allows caching after validation
-    response.headers.set('Cache-Control', 'public, no-cache, must-revalidate');
+    response.headers.set('Cache-Control', 'no-store, no-cache, must-revalidate');
     // Remove ETag to prevent conditional requests that result in 304
     response.headers.delete('ETag');
   } else {
