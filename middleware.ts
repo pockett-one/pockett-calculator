@@ -6,14 +6,25 @@ export const config = {
   matcher: '/sitemap.xml',
 };
 
-export function middleware(_request: NextRequest) {
+export function middleware(request: NextRequest) {
   const response = NextResponse.next();
+  
+  // Detect Googlebot and other search engine crawlers
+  const userAgent = request.headers.get('user-agent') || '';
+  const isSearchEngineBot = /Googlebot|bingbot|Slurp|DuckDuckBot|Baiduspider|YandexBot|Sogou|Exabot|facebot|ia_archiver/i.test(userAgent);
 
-  // Allow caching for performance while ensuring freshness
-  // max-age=3600: browsers cache for 1 hour
-  // s-maxage=3600: CDN/proxies cache for 1 hour
-  // must-revalidate: require revalidation after cache expires
-  response.headers.set('Cache-Control', 'public, max-age=3600, s-maxage=3600, must-revalidate');
+  if (isSearchEngineBot) {
+    // For search engines: force fresh responses to ensure HTTP 200
+    // no-cache: always revalidate (prevents 304 responses)
+    // public: allows caching after validation
+    response.headers.set('Cache-Control', 'public, no-cache, must-revalidate');
+    // Remove ETag to prevent conditional requests that result in 304
+    response.headers.delete('etag');
+    response.headers.delete('ETag');
+  } else {
+    // For regular users: allow caching for performance
+    response.headers.set('Cache-Control', 'public, max-age=3600, s-maxage=3600, must-revalidate');
+  }
 
   return response;
 }
