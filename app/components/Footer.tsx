@@ -1,19 +1,25 @@
+'use client';
+
 import React from 'react';
 import Link from 'next/link';
 import { Calculator, CheckCircle, Shield } from 'lucide-react';
+import AdBanner from './AdBanner';
 
 export default function Footer() {
+  // Get footer ad slot from environment variable
+  const footerAdSlot = process.env.NEXT_PUBLIC_ADSENSE_FOOTER_SLOT;
+
   return (
     <footer className="relative mt-24 bg-gradient-to-b from-white to-gray-50">
       {/* Bottom Ad Slot */}
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
-        <div className="ad-slot" style={{ minHeight: '90px' }}>
-          <div className="text-center">
-            <div className="text-xs font-bold text-gray-400 mb-1">Advertisement</div>
-            <div className="text-xs text-gray-400">Google AdSense - Footer Banner (728x90)</div>
-          </div>
+      {footerAdSlot && (
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
+          <AdBanner 
+            adSlot={footerAdSlot}
+            className="border-t border-gray-200 pt-6"
+          />
         </div>
-      </div>
+      )}
 
       {/* Main Footer Content */}
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4">

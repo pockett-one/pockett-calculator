@@ -1,7 +1,10 @@
+'use client';
+
 import React from 'react';
 import Link from 'next/link';
 import { ChevronRight } from 'lucide-react';
 import CalculatorMenu from './CalculatorMenu';
+import SidebarAd from './SidebarAd';
 
 interface LegalPageLayoutProps {
   title: string;
@@ -45,19 +48,11 @@ export default function LegalPageLayout({ title, children }: LegalPageLayoutProp
 
           {/* Right Sidebar - Ad Space */}
           <div className="hidden lg:block lg:col-span-3">
-            <div className="sticky top-32 space-y-6">
-              <div className="ad-slot w-full h-[250px]">
-                <div className="text-center">
-                  <div className="text-xs font-bold text-gray-400 mb-1">Advertisement</div>
-                  <div className="text-xs text-gray-400">Google AdSense - Square (300x250)</div>
-                </div>
-              </div>
-              <div className="ad-slot w-full h-[250px]">
-                <div className="text-center">
-                  <div className="text-xs font-bold text-gray-400 mb-1">Advertisement</div>
-                  <div className="text-xs text-gray-400">Google AdSense - Square (300x250)</div>
-                </div>
-              </div>
+            <div className="sticky top-32">
+              <SidebarAd 
+                adSlot={process.env.NEXT_PUBLIC_ADSENSE_SIDEBAR_SLOT}
+                count={2}
+              />
             </div>
           </div>
         </div>
