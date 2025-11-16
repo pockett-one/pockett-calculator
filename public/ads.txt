@@ -1,0 +1,16 @@
+# ads.txt file for Pockett Calculator
+# This file authorizes Google AdSense and other ad networks to sell ads on this domain
+# Learn more: https://support.google.com/adsense/answer/7532444
+#
+# IMPORTANT: Replace pub-0000000000000000 with your actual AdSense publisher ID
+# Format: pub-XXXXXXXXXX (remove the "ca-pub-" prefix from your publisher ID)
+# Example: If your publisher ID is "ca-pub-3067287177469436", use "pub-3067287177469436"
+
+# Google AdSense
+# Format: <DOMAIN>, <PUBLISHER_ID>, <RELATIONSHIP>, <CERTIFICATION_AUTHORITY_ID>
+google.com, pub-0000000000000000, DIRECT, f08c47fec0942fa0
+
+# Add other ad networks here if you use them
+# Example:
+# example-ad-network.com, publisher-id-123, DIRECT, cert-id-456
+
