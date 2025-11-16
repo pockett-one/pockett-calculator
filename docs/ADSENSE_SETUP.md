@@ -33,6 +33,121 @@ NEXT_PUBLIC_ADSENSE_IN_CONTENT_SLOT=5566778899
 4. Make sure to set them for **Production**, **Preview**, and **Development** environments
 5. Redeploy your application
 
+## 📄 ads.txt File Setup
+
+### What is ads.txt?
+
+**ads.txt** (Authorized Digital Sellers) is a text file that:
+- ✅ **Prevents ad fraud** by declaring authorized ad sellers for your domain
+- ✅ **Increases revenue** by ensuring ads are sold through legitimate channels
+- ✅ **Required by Google AdSense** for better ad serving and higher earnings
+- ✅ **Improves transparency** in the programmatic advertising ecosystem
+
+### Why It Matters
+
+Without ads.txt:
+- ❌ Ad networks may reject or limit ad serving
+- ❌ Lower revenue potential
+- ❌ Risk of unauthorized sellers claiming your inventory
+- ❌ Google AdSense may show warnings in your dashboard
+
+### Implementation
+
+The `ads.txt` file has been created in `/public/ads.txt` and will be automatically served at:
+```
+https://pockettcalculator.com/ads.txt
+```
+
+### How to Configure
+
+1. **Get Your AdSense Publisher ID**
+   - Format: `ca-pub-XXXXXXXXXX` (e.g., `ca-pub-3067287177469436`)
+   - Found in your AdSense dashboard under **Account** → **Account Information**
+
+2. **Update the ads.txt File**
+   
+   Open `/public/ads.txt` and replace the placeholder:
+   
+   ```txt
+   google.com, pub-0000000000000000, DIRECT, f08c47fec0942fa0
+   ```
+   
+   With your actual publisher ID (remove the `ca-pub-` prefix):
+   
+   ```txt
+   google.com, pub-3067287177469436, DIRECT, f08c47fec0942fa0
+   ```
+   
+   **Format Explanation:**
+   - `google.com` - Google's domain
+   - `pub-3067287177469436` - Your publisher ID (without `ca-pub-` prefix)
+   - `DIRECT` - Direct relationship with Google
+   - `f08c47fec0942fa0` - Google's certification authority ID (fixed value)
+
+3. **Verify the File**
+   
+   After deployment, verify it's accessible:
+   - Visit: `https://pockettcalculator.com/ads.txt`
+   - Should display your ads.txt content
+   - Check in AdSense dashboard: **Account** → **Account Information** → **ads.txt status**
+
+4. **Google Verification**
+   - Google will automatically crawl your ads.txt file
+   - Verification typically takes 24-48 hours
+   - Check status in AdSense dashboard
+
+### ads.txt File Format
+
+```txt
+# Comments start with #
+# Format: <DOMAIN>, <PUBLISHER_ID>, <RELATIONSHIP>, <CERTIFICATION_AUTHORITY_ID>
+
+google.com, pub-3067287177469436, DIRECT, f08c47fec0942fa0
+```
+
+**Important Rules:**
+- ✅ One entry per line
+- ✅ No spaces around commas
+- ✅ Publisher ID format: `pub-` + numbers (remove `ca-pub-` prefix)
+- ✅ Must be accessible at root domain: `/ads.txt`
+- ✅ Must be served as `text/plain` content type
+- ✅ Case-sensitive
+
+### Adding Multiple Ad Networks
+
+If you use other ad networks, add them to ads.txt:
+
+```txt
+google.com, pub-3067287177469436, DIRECT, f08c47fec0942fa0
+example-network.com, publisher-id-123, DIRECT, cert-id-456
+another-network.com, pub-789, RESELLER, cert-789
+```
+
+### Troubleshooting
+
+**File Not Found (404)**
+- ✅ Ensure file is in `/public/ads.txt`
+- ✅ Verify file is deployed to production
+- ✅ Check file name is exactly `ads.txt` (lowercase)
+
+**Google Not Recognizing**
+- ✅ Wait 24-48 hours for Google to crawl
+- ✅ Verify file is accessible without authentication
+- ✅ Check publisher ID is correct (remove `ca-pub-` prefix)
+- ✅ Ensure no extra spaces or formatting issues
+
+**Wrong Publisher ID Format**
+- ❌ Wrong: `ca-pub-3067287177469436`
+- ✅ Correct: `pub-3067287177469436` (remove `ca-pub-` prefix)
+
+### Best Practices
+
+1. **Keep it Updated**: Update ads.txt when adding/removing ad networks
+2. **Monitor Status**: Check AdSense dashboard regularly for ads.txt status
+3. **Version Control**: Keep ads.txt in your repository for tracking
+4. **Test Locally**: Verify file is accessible before deploying
+5. **HTTPS Required**: File must be accessible via HTTPS in production
+
 ## 📦 Ad Components
 
 ### 1. AdSenseAd (Base Component)

@@ -210,6 +210,24 @@ No environment variables required for Phase I. Phase II will require:
 - `NEXT_PUBLIC_ADSENSE_ID` - Google AdSense publisher ID
 - `OPENAI_API_KEY` - For AI-powered calculators (Phase II)
 
+## 📚 Documentation
+
+Comprehensive documentation is available in the `/docs` folder:
+
+### Setup & Configuration
+- **[AdSense Setup Guide](docs/ADSENSE_SETUP.md)** - Complete guide for Google AdSense integration, ad components, and monetization
+- **[Component Architecture](docs/COMPONENT_ARCHITECTURE.md)** - Reusable component system and layout patterns
+
+### Testing & CI/CD
+- **[Testing Setup](docs/TESTING_SETUP.md)** - Test suite configuration and coverage
+- **[GitHub Actions Setup](docs/GITHUB_ACTIONS_SETUP.md)** - Automated testing workflows
+- **[Branch Protection Setup](docs/BRANCH_PROTECTION_SETUP.md)** - Configure branch protection rules
+
+### SEO & Optimization
+- **[SEO Guide](docs/SEO_GUIDE.md)** - Search Engine Optimization implementation
+- **[SEO & AEO Optimization](docs/SEO_AEO_OPTIMIZATION.md)** - Comprehensive SEO and Answer Engine Optimization strategies
+- **[SEO & AEO Summary](docs/SEO_AEO_SUMMARY.md)** - Quick reference for SEO/AEO implementation
+
 ## 📄 License
 
 All rights reserved © 2025 Calculator.net Clone
