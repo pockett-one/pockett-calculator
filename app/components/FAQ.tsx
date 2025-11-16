@@ -20,14 +20,11 @@ export default function FAQ({ items, defaultOpenFirst = false }: FAQProps) {
   };
 
   return (
-    <div className="space-y-4" itemScope itemType="https://schema.org/FAQPage">
+    <div className="space-y-4">
       {items.map((item, index) => (
         <div
           key={index}
           className="premium-card rounded-xl overflow-hidden border border-gray-200 hover:border-blue-300 transition-colors"
-          itemScope
-          itemProp="mainEntity"
-          itemType="https://schema.org/Question"
         >
           <button
             onClick={() => toggleQuestion(index)}
@@ -35,10 +32,7 @@ export default function FAQ({ items, defaultOpenFirst = false }: FAQProps) {
             aria-expanded={openIndex === index}
             aria-controls={`faq-answer-${index}`}
           >
-            <h3 
-              className="text-base font-semibold text-gray-900 pr-4"
-              itemProp="name"
-            >
+            <h3 className="text-base font-semibold text-gray-900 pr-4">
               {item.question}
             </h3>
             {openIndex === index ? (
@@ -47,18 +41,16 @@ export default function FAQ({ items, defaultOpenFirst = false }: FAQProps) {
               <ChevronDown className="w-5 h-5 text-gray-400 flex-shrink-0" aria-hidden="true" />
             )}
           </button>
-          {openIndex === index && (
-            <div
-              id={`faq-answer-${index}`}
-              className="px-6 pb-4 text-gray-600 text-sm leading-relaxed"
-              itemScope
-              itemProp="acceptedAnswer"
-              itemType="https://schema.org/Answer"
-              role="region"
-            >
-              <div itemProp="text">{item.answer}</div>
-            </div>
-          )}
+          <div
+            id={`faq-answer-${index}`}
+            className={`px-6 pb-4 text-gray-600 text-sm leading-relaxed transition-all ${
+              openIndex === index ? 'block' : 'hidden'
+            }`}
+            role="region"
+            aria-hidden={openIndex !== index}
+          >
+            {item.answer}
+          </div>
         </div>
       ))}
     </div>

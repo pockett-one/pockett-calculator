@@ -230,6 +230,7 @@ function FAQCard({ faq, index, isOpen, onToggle }: FAQCardProps) {
         className="w-full px-6 py-5 flex items-start justify-between text-left hover:bg-gray-50 transition-colors"
         aria-expanded={isOpen}
         aria-controls={`faq-answer-${index}`}
+        id={`faq-question-${index}`}
       >
         <h3 className="text-base md:text-lg font-semibold text-gray-900 pr-4 leading-relaxed">
           {faq.question}
@@ -240,16 +241,17 @@ function FAQCard({ faq, index, isOpen, onToggle }: FAQCardProps) {
           <ChevronDown className="w-6 h-6 text-gray-400 flex-shrink-0 mt-1" />
         )}
       </button>
-      {isOpen && (
-        <div
-          id={`faq-answer-${index}`}
-          className="px-6 pb-5 text-gray-700 text-sm md:text-base leading-relaxed"
-          role="region"
-          aria-labelledby={`faq-question-${index}`}
-        >
-          {faq.answer}
-        </div>
-      )}
+      <div
+        id={`faq-answer-${index}`}
+        className={`px-6 pb-5 text-gray-700 text-sm md:text-base leading-relaxed transition-all ${
+          isOpen ? 'block' : 'hidden'
+        }`}
+        role="region"
+        aria-labelledby={`faq-question-${index}`}
+        aria-hidden={!isOpen}
+      >
+        {faq.answer}
+      </div>
     </div>
   );
 }

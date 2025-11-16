@@ -109,15 +109,24 @@ export function getHowToSchema(
 
 // FAQPage Schema
 export function getFAQSchema(faqs: Array<{ question: string; answer: string }>) {
+  // Filter out any FAQs that don't have both question and answer
+  // This ensures all mainEntity items have required acceptedAnswer field
+  const validFAQs = faqs.filter(faq => 
+    faq.question && 
+    faq.answer && 
+    faq.question.trim().length > 0 && 
+    faq.answer.trim().length > 0
+  );
+
   return {
     "@context": "https://schema.org",
     "@type": "FAQPage",
-    "mainEntity": faqs.map(faq => ({
+    "mainEntity": validFAQs.map(faq => ({
       "@type": "Question",
-      "name": faq.question,
+      "name": faq.question.trim(),
       "acceptedAnswer": {
         "@type": "Answer",
-        "text": faq.answer
+        "text": faq.answer.trim()
       }
     }))
   };
