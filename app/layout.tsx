@@ -96,6 +96,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   const gaId = process.env.NEXT_PUBLIC_GA_ID;
+  const adsenseClientId = process.env.NEXT_PUBLIC_ADSENSE_CLIENT_ID;
 
   return (
     <html lang="en">
@@ -116,6 +117,14 @@ export default function RootLayout({
               `}
             </Script>
           </>
+        )}
+        {/* Google AdSense */}
+        {adsenseClientId && (
+          <Script
+            src={`https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=${adsenseClientId}`}
+            strategy="afterInteractive"
+            crossOrigin="anonymous"
+          />
         )}
         <Header />
         <HorizontalAdBanner />
