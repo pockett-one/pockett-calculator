@@ -1,3 +1,5 @@
+'use client';
+
 import React from 'react';
 import Link from 'next/link';
 import { 
@@ -20,6 +22,7 @@ import {
   ArrowLeftRight
 } from 'lucide-react';
 import CalculatorMenu from './CalculatorMenu';
+import SidebarAd from './SidebarAd';
 
 interface CalculatorLayoutProps {
   title: string;
@@ -136,25 +139,11 @@ export default function CalculatorLayout({
 
           {/* Right Sidebar - Ad Space */}
           <div className="hidden lg:block lg:col-span-3">
-            <div className="sticky top-32 space-y-6">
-              <div className="ad-slot" style={{ minHeight: '250px' }}>
-                <div className="text-center">
-                  <div className="text-xs font-bold text-gray-400 mb-1">Advertisement</div>
-                  <div className="text-xs text-gray-400">300x250</div>
-                </div>
-              </div>
-              <div className="ad-slot" style={{ minHeight: '250px' }}>
-                <div className="text-center">
-                  <div className="text-xs font-bold text-gray-400 mb-1">Advertisement</div>
-                  <div className="text-xs text-gray-400">300x250</div>
-                </div>
-              </div>
-              <div className="ad-slot" style={{ minHeight: '250px' }}>
-                <div className="text-center">
-                  <div className="text-xs font-bold text-gray-400 mb-1">Advertisement</div>
-                  <div className="text-xs text-gray-400">300x250</div>
-                </div>
-              </div>
+            <div className="sticky top-32">
+              <SidebarAd 
+                adSlot={process.env.NEXT_PUBLIC_ADSENSE_SIDEBAR_SLOT}
+                count={3}
+              />
             </div>
           </div>
         </div>
