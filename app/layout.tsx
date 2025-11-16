@@ -88,6 +88,9 @@ export const metadata: Metadata = {
     shortcut: '/favicon.ico',
     apple: '/favicon-128x128.png',
   },
+  other: {
+    'google-adsense-account': process.env.NEXT_PUBLIC_ADSENSE_CLIENT_ID || '',
+  },
 };
 
 export default function RootLayout({
