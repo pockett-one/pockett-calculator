@@ -24,7 +24,7 @@ import {
   Smartphone
 } from 'lucide-react';
 import CalculatorMenu from './components/CalculatorMenu';
-import StructuredData, { organizationSchema, websiteSchema, getFAQSchema } from './components/StructuredData';
+import StructuredData, { organizationSchema, websiteSchema } from './components/StructuredData';
 import FAQ, { commonCalculatorFAQs } from './components/FAQ';
 
 export default function Home() {
@@ -238,7 +238,7 @@ export default function Home() {
       {/* Structured Data for SEO */}
       <StructuredData data={organizationSchema} />
       <StructuredData data={websiteSchema} />
-      <StructuredData data={getFAQSchema(commonCalculatorFAQs)} />
+      {/* Note: FAQPage schema is only on /faq page to avoid duplicates */}
       
       <div className="min-h-screen">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
