@@ -15,7 +15,17 @@
     "test:e2e": "playwright test",
     "test:e2e:ui": "playwright test --ui",
     "test:e2e:smoke": "playwright test --grep @smoke --max-failures=3",
-    "test:all": "npm run test && npm run test:e2e"
+    "test:all": "npm run test && npm run test:e2e",
+    "review": "node scripts/code-review-agent.js",
+    "review:list": "node scripts/review-manager.js list",
+    "review:list:pending": "node scripts/review-manager.js list pending",
+    "review:list:acknowledged": "node scripts/review-manager.js list acknowledged",
+    "review:list:resolved": "node scripts/review-manager.js list resolved",
+    "review:ack": "node scripts/review-manager.js ack",
+    "review:resolve": "node scripts/review-manager.js resolve",
+    "review:respond": "node scripts/review-manager.js respond",
+    "review:stats": "node scripts/review-manager.js stats",
+    "review:setup": "node scripts/setup-review-hooks.js"
   },
   "dependencies": {
     "lucide-react": "^0.546.0",
