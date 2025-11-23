@@ -109,26 +109,54 @@ export function getHowToSchema(
 
 // FAQPage Schema
 export function getFAQSchema(faqs: Array<{ question: string; answer: string }>) {
-  // Filter out any FAQs that don't have both question and answer
+  // Strict validation: Filter out any FAQs that don't have both question and answer
   // This ensures all mainEntity items have required acceptedAnswer field
-  const validFAQs = faqs.filter(faq => 
-    faq.question && 
-    faq.answer && 
-    faq.question.trim().length > 0 && 
-    faq.answer.trim().length > 0
-  );
+  // Minimum length checks ensure meaningful content
+  const validFAQs = faqs.filter(faq => {
+    const question = typeof faq.question === 'string' ? faq.question.trim() : '';
+    const answer = typeof faq.answer === 'string' ? faq.answer.trim() : '';
+    
+    // Ensure both question and answer exist and have meaningful content
+    return (
+      question.length > 0 &&
+      answer.length > 0 &&
+      question.length >= 5 && // Minimum question length
+      answer.length >= 10    // Minimum answer length for meaningful content
+    );
+  });
+
+  // Build mainEntity array with guaranteed acceptedAnswer structure
+  // Double-check that answer is valid before including in schema
+  const mainEntity = validFAQs
+    .map(faq => {
+      const question = faq.question.trim();
+      const answer = faq.answer.trim();
+      
+      // Final validation: ensure answer is not empty
+      if (!answer || answer.length === 0) {
+        return null;
+      }
+      
+      return {
+        "@type": "Question",
+        "name": question,
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": answer
+        }
+      };
+    })
+    .filter((item): item is NonNullable<typeof item> => item !== null);
+
+  // Only return schema if we have valid FAQs
+  if (mainEntity.length === 0) {
+    return null;
+  }
 
   return {
     "@context": "https://schema.org",
     "@type": "FAQPage",
-    "mainEntity": validFAQs.map(faq => ({
-      "@type": "Question",
-      "name": faq.question.trim(),
-      "acceptedAnswer": {
-        "@type": "Answer",
-        "text": faq.answer.trim()
-      }
-    }))
+    "mainEntity": mainEntity
   };
 }
 

@@ -50,7 +50,7 @@ export default function FAQLayout({
     <>
       {/* Structured Data - Rendered once on server side */}
       <StructuredData data={breadcrumbSchema} />
-      <StructuredData data={faqSchema} />
+      {faqSchema && <StructuredData data={faqSchema} />}
       {children}
     </>
   );
