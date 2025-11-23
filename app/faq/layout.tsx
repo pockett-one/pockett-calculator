@@ -1,4 +1,6 @@
 import { Metadata } from 'next';
+import StructuredData, { getFAQSchema, getBreadcrumbSchema } from '../components/StructuredData';
+import { allFAQs } from '../lib/faq-data';
 
 export const metadata: Metadata = {
   title: "FAQ - Calculator Questions Answered | Pockett Calculator",
@@ -35,6 +37,22 @@ export default function FAQLayout({
 }: {
   children: React.ReactNode;
 }) {
-  return children;
+  // Generate structured data on server side to avoid duplicates
+  // This prevents the "Duplicate field 'FAQPage'" error from Google Search Console
+  const breadcrumbSchema = getBreadcrumbSchema([
+    { name: 'Home', url: 'https://pockettcalculator.com' },
+    { name: 'FAQ', url: 'https://pockettcalculator.com/faq' }
+  ]);
+
+  const faqSchema = getFAQSchema(allFAQs);
+
+  return (
+    <>
+      {/* Structured Data - Rendered once on server side */}
+      <StructuredData data={breadcrumbSchema} />
+      {faqSchema && <StructuredData data={faqSchema} />}
+      {children}
+    </>
+  );
 }
 

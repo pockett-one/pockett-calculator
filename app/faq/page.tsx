@@ -3,7 +3,6 @@
 import React, { useState } from 'react';
 import { ChevronDown, ChevronUp, Search, HelpCircle } from 'lucide-react';
 import Link from 'next/link';
-import StructuredData, { getFAQSchema, getBreadcrumbSchema } from '../components/StructuredData';
 import { 
   allFAQs, 
   faqCategories,
@@ -50,20 +49,8 @@ export default function FAQPage() {
     features: featuresAccessibilityFAQs
   };
 
-  // Breadcrumb schema
-  const breadcrumbSchema = getBreadcrumbSchema([
-    { name: 'Home', url: 'https://pockettcalculator.com' },
-    { name: 'FAQ', url: 'https://pockettcalculator.com/faq' }
-  ]);
-
-  // FAQ schema for SEO
-  const faqSchema = getFAQSchema(allFAQs);
-
   return (
     <>
-      {/* Structured Data */}
-      <StructuredData data={breadcrumbSchema} />
-      <StructuredData data={faqSchema} />
 
       <div className="min-h-screen bg-gradient-to-br from-gray-50 via-blue-50 to-gray-50">
         <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-12">

@@ -18,12 +18,10 @@ export default function ScientificCalculatorPage() {
       setDisplay(num);
       setNewNumber(false);
     } else {
-      // Always append numbers, but if display is "0" and num is "0", keep it as "0"
-      if (display === '0' && num === '0') {
-        setDisplay('0');
-      } else if (display === '0') {
-        // If display is "0" and num is not "0", append to allow leading zeros
-        setDisplay(display + num);
+      // If display is "0", replace it with the new number (don't append)
+      // This prevents "05" when user presses 5 after 0
+      if (display === '0') {
+        setDisplay(num);
       } else {
         setDisplay(display + num);
       }

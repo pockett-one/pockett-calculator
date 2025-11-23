@@ -222,6 +222,7 @@ Comprehensive documentation is available in the `/docs` folder:
 - **[Testing Setup](docs/TESTING_SETUP.md)** - Test suite configuration and coverage
 - **[GitHub Actions Setup](docs/GITHUB_ACTIONS_SETUP.md)** - Automated testing workflows
 - **[Branch Protection Setup](docs/BRANCH_PROTECTION_SETUP.md)** - Configure branch protection rules
+- **[Code Review System](docs/CODE_REVIEW_SYSTEM.md)** - Automated code review agent with git hooks
 
 ### SEO & Optimization
 - **[SEO Guide](docs/SEO_GUIDE.md)** - Search Engine Optimization implementation
