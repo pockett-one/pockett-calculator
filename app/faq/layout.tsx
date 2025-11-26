@@ -48,9 +48,10 @@ export default function FAQLayout({
 
   return (
     <>
-      {/* Structured Data - Rendered once on server side */}
-      <StructuredData data={breadcrumbSchema} />
-      {faqSchema && <StructuredData data={faqSchema} />}
+      {/* Structured Data - Rendered once on server side with unique script IDs */}
+      {/* Using scriptId ensures the script tags have unique IDs to prevent duplicates */}
+      <StructuredData scriptId="breadcrumb-schema" data={breadcrumbSchema} />
+      {faqSchema && <StructuredData scriptId="faq-page-schema" data={faqSchema} />}
       {children}
     </>
   );

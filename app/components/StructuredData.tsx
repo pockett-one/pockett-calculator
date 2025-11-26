@@ -2,11 +2,20 @@ import React from 'react';
 
 interface StructuredDataProps {
   data: Record<string, any>;
+  /**
+   * Optional unique ID for the script tag to prevent duplicates
+   */
+  scriptId?: string;
 }
 
-export default function StructuredData({ data }: StructuredDataProps) {
+export default function StructuredData({ data, scriptId }: StructuredDataProps) {
+  // Generate a unique ID based on schema type to prevent duplicates
+  const schemaType = data['@type'] || 'schema';
+  const uniqueId = scriptId || `structured-data-${schemaType.toLowerCase()}`;
+  
   return (
     <script
+      id={uniqueId}
       type="application/ld+json"
       dangerouslySetInnerHTML={{ __html: JSON.stringify(data) }}
     />
