@@ -2,11 +2,20 @@ import React from 'react';
 
 interface StructuredDataProps {
   data: Record<string, any>;
+  /**
+   * Optional unique ID for the script tag to prevent duplicates
+   */
+  scriptId?: string;
 }
 
-export default function StructuredData({ data }: StructuredDataProps) {
+export default function StructuredData({ data, scriptId }: StructuredDataProps) {
+  // Generate a unique ID based on schema type to prevent duplicates
+  const schemaType = data['@type'] || 'schema';
+  const uniqueId = scriptId || `structured-data-${schemaType.toLowerCase()}`;
+  
   return (
     <script
+      id={uniqueId}
       type="application/ld+json"
       dangerouslySetInnerHTML={{ __html: JSON.stringify(data) }}
     />
@@ -109,12 +118,29 @@ export function getHowToSchema(
 
 // FAQPage Schema
 export function getFAQSchema(faqs: Array<{ question: string; answer: string }>) {
+  // Validate input
+  if (!Array.isArray(faqs) || faqs.length === 0) {
+    return null;
+  }
+
   // Strict validation: Filter out any FAQs that don't have both question and answer
   // This ensures all mainEntity items have required acceptedAnswer field
   // Minimum length checks ensure meaningful content
   const validFAQs = faqs.filter(faq => {
-    const question = typeof faq.question === 'string' ? faq.question.trim() : '';
-    const answer = typeof faq.answer === 'string' ? faq.answer.trim() : '';
+    // Check if faq exists and is an object
+    if (!faq || typeof faq !== 'object') {
+      return false;
+    }
+
+    // Safely extract and validate question
+    const question = (faq.question && typeof faq.question === 'string') 
+      ? faq.question.trim() 
+      : '';
+    
+    // Safely extract and validate answer
+    const answer = (faq.answer && typeof faq.answer === 'string') 
+      ? faq.answer.trim() 
+      : '';
     
     // Ensure both question and answer exist and have meaningful content
     return (
@@ -126,17 +152,33 @@ export function getFAQSchema(faqs: Array<{ question: string; answer: string }>) 
   });
 
   // Build mainEntity array with guaranteed acceptedAnswer structure
-  // Double-check that answer is valid before including in schema
+  // Triple-check that answer is valid before including in schema
   const mainEntity = validFAQs
     .map(faq => {
-      const question = faq.question.trim();
-      const answer = faq.answer.trim();
+      // Defensive checks - ensure faq exists and has required properties
+      if (!faq || typeof faq !== 'object') {
+        return null;
+      }
+
+      // Safely extract question and answer with fallbacks
+      const question = (faq.question && typeof faq.question === 'string') 
+        ? faq.question.trim() 
+        : '';
+      const answer = (faq.answer && typeof faq.answer === 'string') 
+        ? faq.answer.trim() 
+        : '';
       
-      // Final validation: ensure answer is not empty
-      if (!answer || answer.length === 0) {
+      // Final validation: ensure both question and answer are non-empty
+      if (!question || question.length === 0 || !answer || answer.length === 0) {
         return null;
       }
       
+      // Ensure minimum lengths are met
+      if (question.length < 5 || answer.length < 10) {
+        return null;
+      }
+      
+      // Return schema object with guaranteed acceptedAnswer structure
       return {
         "@type": "Question",
         "name": question,
@@ -146,11 +188,59 @@ export function getFAQSchema(faqs: Array<{ question: string; answer: string }>) 
         }
       };
     })
-    .filter((item): item is NonNullable<typeof item> => item !== null);
+    .filter((item): item is NonNullable<typeof item> => {
+      // Final filter: ensure item is not null and has required structure
+      if (!item || typeof item !== 'object') {
+        return false;
+      }
+      // Verify acceptedAnswer structure exists and is valid
+      const hasValidType: boolean = item['@type'] === 'Question';
+      const hasValidName: boolean = Boolean(item.name && typeof item.name === 'string' && item.name.length > 0);
+      const hasAcceptedAnswer: boolean = Boolean(item.acceptedAnswer && typeof item.acceptedAnswer === 'object');
+      const hasValidAnswerType: boolean = hasAcceptedAnswer && item.acceptedAnswer['@type'] === 'Answer';
+      const hasValidAnswerText: boolean = Boolean(
+        hasAcceptedAnswer && 
+        item.acceptedAnswer.text && 
+        typeof item.acceptedAnswer.text === 'string' && 
+        item.acceptedAnswer.text.length > 0
+      );
+      
+      return hasValidType && hasValidName && hasValidAnswerType && hasValidAnswerText;
+    });
 
   // Only return schema if we have valid FAQs
   if (mainEntity.length === 0) {
     return null;
+  }
+
+  // Final validation: ensure all items have acceptedAnswer
+  const allHaveAcceptedAnswer = mainEntity.every(item => 
+    item.acceptedAnswer && 
+    item.acceptedAnswer['@type'] === 'Answer' &&
+    item.acceptedAnswer.text &&
+    typeof item.acceptedAnswer.text === 'string' &&
+    item.acceptedAnswer.text.length > 0
+  );
+
+  if (!allHaveAcceptedAnswer) {
+    // If any item is missing acceptedAnswer, filter them out
+    const fullyValidItems = mainEntity.filter(item => 
+      item.acceptedAnswer && 
+      item.acceptedAnswer['@type'] === 'Answer' &&
+      item.acceptedAnswer.text &&
+      typeof item.acceptedAnswer.text === 'string' &&
+      item.acceptedAnswer.text.length > 0
+    );
+    
+    if (fullyValidItems.length === 0) {
+      return null;
+    }
+    
+    return {
+      "@context": "https://schema.org",
+      "@type": "FAQPage",
+      "mainEntity": fullyValidItems
+    };
   }
 
   return {
