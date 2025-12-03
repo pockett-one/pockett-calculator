@@ -1,41 +1,41 @@
 import React from 'react';
 import Link from 'next/link';
 import {
-  Calculator,
-  Percent,
-  PieChart,
-  Dices,
-  Triangle,
-  BarChart3,
-  Cake,
+  Binary,
+  Shapes,
+  Sigma,
+  Shuffle,
+  Orbit,
+  Activity,
+  Hash,
   Calendar,
   Clock,
   Hourglass,
   GraduationCap,
   FileText,
-  Package,
+  Box,
   Network,
   Lock,
   ArrowLeftRight
 } from 'lucide-react';
 
 const mathCalculators = [
-  { name: 'Scientific Calculator', href: '/scientific-calculator', Icon: Calculator },
-  { name: 'Fraction Calculator', href: '/fraction-calculator', Icon: PieChart },
-  { name: 'Percentage Calculator', href: '/percentage-calculator', Icon: Percent },
-  { name: 'Random Number Generator', href: '/random-number-generator', Icon: Dices },
-  { name: 'Triangle Calculator', href: '/triangle-calculator', Icon: Triangle },
-  { name: 'Standard Deviation Calculator', href: '/standard-deviation-calculator', Icon: BarChart3 },
+  { name: 'Scientific Calculator', href: '/scientific-calculator', Icon: Binary },
+  { name: 'Fraction Calculator', href: '/fraction-calculator', Icon: Shapes },
+  { name: 'Percentage Calculator', href: '/percentage-calculator', Icon: Sigma },
+  { name: 'Random Number Generator', href: '/random-number-generator', Icon: Shuffle },
+  { name: 'Triangle Calculator', href: '/triangle-calculator', Icon: Orbit },
+  { name: 'Standard Deviation Calculator', href: '/standard-deviation-calculator', Icon: Activity },
 ];
 
 const otherCalculators = [
-  { name: 'Age Calculator', href: '/age-calculator', Icon: Cake },
+  { name: 'Age Calculator', href: '/age-calculator', Icon: Hash },
   { name: 'Date Calculator', href: '/date-calculator', Icon: Calendar },
   { name: 'Time Calculator', href: '/time-calculator', Icon: Clock },
   { name: 'Hours Calculator', href: '/hours-calculator', Icon: Hourglass },
   { name: 'GPA Calculator', href: '/gpa-calculator', Icon: GraduationCap },
   { name: 'Grade Calculator', href: '/grade-calculator', Icon: FileText },
-  { name: 'Concrete Calculator', href: '/concrete-calculator', Icon: Package },
+  { name: 'Concrete Calculator', href: '/concrete-calculator', Icon: Box },
   { name: 'Subnet Calculator', href: '/subnet-calculator', Icon: Network },
   { name: 'Password Generator', href: '/password-generator', Icon: Lock },
   { name: 'Conversion Calculator', href: '/conversion-calculator', Icon: ArrowLeftRight },
