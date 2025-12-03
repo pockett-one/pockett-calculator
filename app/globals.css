@@ -1,328 +1,138 @@
-@import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;600;700;800;900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;700&display=swap');
 
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
+:root {
+  /* Nebula Theme Palette */
+  --bg-page: #0f0720;
+  /* Deep Void Purple */
+  --bg-panel: rgba(30, 27, 75, 0.4);
+  /* Glassmorphic Indigo/Purple */
+  --bg-panel-hover: rgba(49, 46, 129, 0.5);
+
+  --border-subtle: rgba(139, 92, 246, 0.2);
+  /* Low opacity violet */
+  --border-strong: rgba(139, 92, 246, 0.4);
+
+  --text-primary: #f1f5f9;
+  /* Slate 100 */
+  --text-secondary: #cbd5e1;
+  /* Slate 300 */
+  --text-tertiary: #94a3b8;
+  /* Slate 400 */
+
+  --accent-primary: #8b5cf6;
+  /* Violet 500 */
+  --accent-secondary: #06b6d4;
+  /* Cyan 500 */
+  --accent-glow: rgba(139, 92, 246, 0.3);
+}
+
 @layer base {
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-}
-
-html {
-  scroll-behavior: smooth;
-  scroll-padding-top: 200px; /* Account for sticky header + ad banner height */
-}
-
-body {
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-    background: linear-gradient(135deg, #f5f7fa 0%, #ffffff 50%, #f5f7fa 100%);
-    color: #1a202c;
-    line-height: 1.6;
-    font-variant-numeric: tabular-nums;
+  html {
+    scroll-behavior: smooth;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
   }
 
-  h1, h2, h3, h4, h5, h6 {
-    line-height: 1.2;
-    font-weight: 700;
-    letter-spacing: -0.02em;
+  body {
+    background-color: var(--bg-page);
+    color: var(--text-primary);
+    font-family: 'Inter', sans-serif;
+
+    /* Nebula Background Gradient */
+    background-image:
+      radial-gradient(circle at 15% 50%, rgba(76, 29, 149, 0.15), transparent 25%),
+      radial-gradient(circle at 85% 30%, rgba(6, 182, 212, 0.1), transparent 25%);
+    background-attachment: fixed;
   }
 
-  /* Ensure anchor targets account for sticky header + ad banner */
-  [id] {
-    scroll-margin-top: 200px;
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    @apply tracking-tight font-semibold text-white;
   }
 }
 
 @layer components {
-  /* Premium Calculator Button */
-  .calc-btn {
-    user-select: none;
-    -webkit-user-select: none;
-    touch-action: manipulation;
-    position: relative;
-    overflow: hidden;
-    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+
+  /* Glass Panel (Replaces Bento Card) */
+  .glass-panel {
+    background-color: var(--bg-panel);
+    border: 1px solid var(--border-subtle);
+    backdrop-filter: blur(12px);
+    @apply transition-all duration-300 relative overflow-hidden;
   }
 
-  .calc-btn::before {
-    content: '';
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    width: 0;
-    height: 0;
-    border-radius: 50%;
-    background: rgba(255, 255, 255, 0.3);
-    transform: translate(-50%, -50%);
-    transition: width 0.6s, height 0.6s;
-  }
-
-  .calc-btn:active::before {
-    width: 300px;
-    height: 300px;
-  }
-
-  .calc-btn:active {
-    transform: scale(0.96);
-  }
-
-  /* Premium Card */
-  .premium-card {
-    background: rgba(255, 255, 255, 0.95);
-    backdrop-filter: blur(10px);
-    border: 1px solid rgba(226, 232, 240, 0.8);
-    box-shadow: 
-      0 4px 6px -1px rgba(0, 0, 0, 0.05),
-      0 10px 15px -3px rgba(0, 0, 0, 0.05),
-      0 0 0 1px rgba(0, 0, 0, 0.02);
-    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-  }
-
-  .premium-card:hover {
-    transform: translateY(-4px);
-    box-shadow: 
-      0 20px 25px -5px rgba(0, 0, 0, 0.08),
-      0 10px 10px -5px rgba(0, 0, 0, 0.04),
-      0 0 0 1px rgba(0, 0, 0, 0.05);
-  }
-
-  /* Gradient Text */
-  .gradient-text {
-    background: linear-gradient(135deg, #1a202c 0%, #4a5568 100%);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
-  }
-
-  /* Premium Button */
-  .btn-premium {
-    position: relative;
-    background: linear-gradient(135deg, #2d3748 0%, #1a202c 100%);
-    color: white;
-    font-weight: 600;
-    padding: 0.875rem 2rem;
-    border-radius: 0.75rem;
-    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-    box-shadow: 
-      0 4px 6px -1px rgba(0, 0, 0, 0.1),
-      0 2px 4px -1px rgba(0, 0, 0, 0.06),
-      inset 0 1px 0 0 rgba(255, 255, 255, 0.1);
-  }
-
-  .btn-premium:hover {
+  .glass-panel:hover {
+    border-color: var(--border-strong);
+    background-color: var(--bg-panel-hover);
+    box-shadow: 0 0 20px -5px var(--accent-glow);
     transform: translateY(-2px);
-    box-shadow: 
-      0 10px 15px -3px rgba(0, 0, 0, 0.15),
-      0 4px 6px -2px rgba(0, 0, 0, 0.1),
-      inset 0 1px 0 0 rgba(255, 255, 255, 0.15);
   }
 
-  .btn-premium:active {
-    transform: translateY(0);
+  /* Nebula Button */
+  .btn-nebula {
+    @apply font-mono text-sm font-bold uppercase tracking-wider px-6 py-3 rounded-lg transition-all duration-200 relative overflow-hidden;
+    background: linear-gradient(135deg, rgba(139, 92, 246, 0.2), rgba(6, 182, 212, 0.2));
+    border: 1px solid rgba(139, 92, 246, 0.4);
+    color: #e2e8f0;
   }
 
-      /* Calculator Display */
-      .calc-display {
-        font-family: 'Orbitron', 'SF Mono', 'Monaco', monospace;
-        font-size: 2.5rem;
-        font-weight: 700;
-        text-align: right;
-        word-break: break-all;
-        letter-spacing: 0.05em;
-        background: linear-gradient(135deg, #1a1a1a 0%, #2d2d2d 100%);
-        border: 2px solid #3a3a3a;
-        border-radius: 1rem;
-        padding: 1.5rem;
-        box-shadow: 
-          inset 0 2px 8px 0 rgba(0, 0, 0, 0.5),
-          0 0 20px rgba(59, 130, 246, 0.1);
-        color: #60a5fa;
-        text-shadow: 0 0 10px rgba(96, 165, 250, 0.5);
-      }
+  .btn-nebula:hover {
+    background: linear-gradient(135deg, rgba(139, 92, 246, 0.3), rgba(6, 182, 212, 0.3));
+    border-color: rgba(139, 92, 246, 0.6);
+    color: #ffffff;
+    box-shadow: 0 0 15px rgba(139, 92, 246, 0.3);
+  }
 
-      /* LED Result Display */
-      .led-result {
-        font-family: 'Orbitron', monospace;
-        font-weight: 800;
-        letter-spacing: 0.08em;
-        color: #60a5fa;
-        text-shadow: 
-          0 0 10px rgba(96, 165, 250, 0.8),
-          0 0 20px rgba(96, 165, 250, 0.5),
-          0 0 30px rgba(96, 165, 250, 0.3);
-      }
+  /* Calculator Display */
+  .calc-display {
+    font-family: 'JetBrains Mono', monospace;
+    background-color: rgba(15, 23, 42, 0.6);
+    border: 1px solid var(--border-subtle);
+    @apply text-right p-6 mb-6 rounded-xl text-2xl md:text-3xl text-white shadow-inner;
+  }
 
-      /* LED Result Red Variant */
-      .led-result-red {
-        font-family: 'Orbitron', monospace;
-        font-weight: 800;
-        letter-spacing: 0.08em;
-        color: #f87171;
-        text-shadow: 
-          0 0 10px rgba(248, 113, 113, 0.8),
-          0 0 20px rgba(248, 113, 113, 0.5),
-          0 0 30px rgba(248, 113, 113, 0.3);
-      }
+  /* Calculator Buttons */
+  .calc-btn {
+    @apply relative font-mono text-sm font-medium transition-all duration-150 flex items-center justify-center rounded-lg border border-white/5 shadow-sm active:scale-95;
+  }
+
+  .calc-btn-default {
+    @apply bg-slate-800/50 text-slate-200 hover:bg-slate-700/50 hover:border-white/10;
+  }
+
+  .calc-btn-operator {
+    @apply bg-violet-900/30 text-violet-300 hover:bg-violet-900/50 border-violet-500/20 hover:border-violet-500/40;
+  }
+
+  .calc-btn-function {
+    @apply bg-slate-800/30 text-slate-400 hover:bg-slate-700/30 hover:text-slate-300;
+  }
+
+  .calc-btn-equals {
+    @apply bg-gradient-to-r from-violet-600 to-cyan-600 text-white border-none hover:opacity-90 shadow-lg shadow-violet-500/20;
+  }
 
   /* Ad Slot */
-  .ad-slot {
-    background: linear-gradient(135deg, #fafafa 0%, #f5f5f5 100%);
-    border: 2px dashed #e5e7eb;
-    border-radius: 1rem;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    color: #9ca3af;
-    font-size: 0.75rem;
-    font-weight: 600;
-    text-align: center;
-    padding: 1rem;
-    min-height: 90px;
-    transition: all 0.3s ease;
-  }
-
-  .ad-slot:hover {
-    border-color: #d1d5db;
-    background: linear-gradient(135deg, #f9fafb 0%, #f3f4f6 100%);
-  }
-
-  /* Feature Icon */
-  .feature-icon {
-    width: 4rem;
-    height: 4rem;
-    border-radius: 1.25rem;
-    background: linear-gradient(135deg, #f7fafc 0%, #edf2f7 100%);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    box-shadow: 
-      0 4px 6px -1px rgba(0, 0, 0, 0.05),
-      0 2px 4px -1px rgba(0, 0, 0, 0.03);
-    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-  }
-
-  .feature-icon:hover {
-    transform: scale(1.1) rotate(5deg);
-    box-shadow: 
-      0 10px 15px -3px rgba(0, 0, 0, 0.1),
-      0 4px 6px -2px rgba(0, 0, 0, 0.05);
-  }
-
-  /* Animated Background */
-  .animated-bg {
-    background: linear-gradient(-45deg, #f7fafc, #edf2f7, #e2e8f0, #cbd5e0);
-    background-size: 400% 400%;
-    animation: gradient 15s ease infinite;
-  }
-
-  @keyframes gradient {
-    0% { background-position: 0% 50%; }
-    50% { background-position: 100% 50%; }
-    100% { background-position: 0% 50%; }
-  }
-
-  /* Pulse Animation */
-  @keyframes pulse-subtle {
-    0%, 100% { opacity: 1; }
-    50% { opacity: 0.8; }
-  }
-
-  .pulse-subtle {
-    animation: pulse-subtle 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
-  }
-
-  /* Floating Animation */
-  @keyframes float {
-    0%, 100% { transform: translateY(0px); }
-    50% { transform: translateY(-10px); }
-  }
-
-  .float {
-    animation: float 3s ease-in-out infinite;
+  .ad-slot-nebula {
+    @apply border border-white/10 bg-white/5 flex items-center justify-center text-slate-500 font-mono text-xs uppercase tracking-widest rounded-xl backdrop-blur-sm;
+    background-image: repeating-linear-gradient(45deg, transparent, transparent 10px, rgba(255, 255, 255, 0.03) 10px, rgba(255, 255, 255, 0.03) 20px);
   }
 }
 
 @layer utilities {
-  /* Custom scrollbar */
-  ::-webkit-scrollbar {
-    width: 12px;
+  .text-gradient {
+    @apply bg-clip-text text-transparent bg-gradient-to-r from-violet-400 via-fuchsia-400 to-cyan-400;
   }
 
-  ::-webkit-scrollbar-track {
-    background: #f7fafc;
-    border-radius: 6px;
-  }
-
-  ::-webkit-scrollbar-thumb {
-    background: linear-gradient(135deg, #cbd5e0 0%, #a0aec0 100%);
-    border-radius: 6px;
-    border: 2px solid #f7fafc;
-  }
-
-  ::-webkit-scrollbar-thumb:hover {
-    background: linear-gradient(135deg, #a0aec0 0%, #718096 100%);
-  }
-
-  /* Selection */
-  ::selection {
-    background-color: #2d3748;
-    color: #ffffff;
-  }
-
-  /* Focus styles */
-  button:focus-visible,
-  a:focus-visible,
-  input:focus-visible,
-  select:focus-visible,
-  textarea:focus-visible {
-    outline: 3px solid #4299e1;
-    outline-offset: 2px;
-    border-radius: 0.5rem;
-  }
-}
-
-/* Mobile-optimized input fields */
-@layer components {
-  input[type="text"],
-  input[type="number"],
-  input[type="date"],
-  input[type="email"],
-  select,
-  textarea {
-    min-height: 48px;
-    font-size: 16px; /* Prevents zoom on iOS */
-  }
-}
-
-/* Responsive adjustments */
-@media (max-width: 640px) {
-  html {
-    font-size: 14px;
-  }
-  
-  .calc-display {
-    font-size: 1.75rem;
-    padding: 1rem;
-  }
-
-  /* Ensure buttons are easily tappable on mobile */
-  .calc-btn {
-    min-height: 48px;
-  }
-  
-  /* Better spacing for mobile touch targets */
-  button, 
-  a {
-    -webkit-tap-highlight-color: rgba(0, 0, 0, 0.1);
-  }
-}
-
-@media (min-width: 1024px) {
-  html {
-    font-size: 16px;
+  .text-glow {
+    text-shadow: 0 0 20px rgba(139, 92, 246, 0.5);
   }
 }

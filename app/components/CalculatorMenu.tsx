@@ -1,21 +1,21 @@
 import React from 'react';
 import Link from 'next/link';
-import { 
-  Calculator, 
-  Percent, 
-  PieChart, 
-  Dices, 
-  Triangle, 
-  BarChart3, 
-  Cake, 
-  Calendar, 
-  Clock, 
-  Hourglass, 
-  GraduationCap, 
-  FileText, 
-  Package, 
-  Network, 
-  Lock, 
+import {
+  Calculator,
+  Percent,
+  PieChart,
+  Dices,
+  Triangle,
+  BarChart3,
+  Cake,
+  Calendar,
+  Clock,
+  Hourglass,
+  GraduationCap,
+  FileText,
+  Package,
+  Network,
+  Lock,
   ArrowLeftRight
 } from 'lucide-react';
 
@@ -45,17 +45,17 @@ export default function CalculatorMenu() {
   return (
     <div className="hidden lg:block lg:col-span-3">
       <div className="sticky top-32">
-        <nav className="premium-card rounded-2xl p-4 space-y-4">
-          <h3 className="text-sm font-bold text-gray-900 uppercase tracking-wider px-2">All Calculators</h3>
-          
+        <nav className="glass-panel rounded-2xl p-4 space-y-4">
+          <h3 className="text-sm font-bold text-white uppercase tracking-wider px-2">All Calculators</h3>
+
           {/* Math Calculators */}
           <div className="space-y-1">
-            <h4 className="text-xs font-semibold text-gray-500 uppercase tracking-wide px-2 mb-2">Math</h4>
+            <h4 className="text-xs font-semibold text-violet-400 uppercase tracking-wide px-2 mb-2">Math</h4>
             {mathCalculators.map((calc) => (
-              <Link 
+              <Link
                 key={calc.href}
-                href={calc.href} 
-                className="flex items-center gap-2 px-2 py-2 text-sm text-gray-700 hover:bg-blue-50 hover:text-blue-700 rounded-lg transition-colors"
+                href={calc.href}
+                className="flex items-center gap-2 px-2 py-2 text-sm text-slate-400 hover:bg-violet-500/10 hover:text-cyan-400 rounded-lg transition-colors"
               >
                 <calc.Icon className="w-4 h-4" />
                 <span>{calc.name.replace(' Calculator', '')}</span>
@@ -64,13 +64,13 @@ export default function CalculatorMenu() {
           </div>
 
           {/* Other Calculators */}
-          <div className="space-y-1 pt-3 border-t border-gray-200">
-            <h4 className="text-xs font-semibold text-gray-500 uppercase tracking-wide px-2 mb-2">Other</h4>
+          <div className="space-y-1 pt-3 border-t border-violet-500/20">
+            <h4 className="text-xs font-semibold text-violet-400 uppercase tracking-wide px-2 mb-2">Other</h4>
             {otherCalculators.map((calc) => (
-              <Link 
+              <Link
                 key={calc.href}
-                href={calc.href} 
-                className="flex items-center gap-2 px-2 py-2 text-sm text-gray-700 hover:bg-red-50 hover:text-red-700 rounded-lg transition-colors"
+                href={calc.href}
+                className="flex items-center gap-2 px-2 py-2 text-sm text-slate-400 hover:bg-violet-500/10 hover:text-cyan-400 rounded-lg transition-colors"
               >
                 <calc.Icon className="w-4 h-4" />
                 <span>{calc.name.replace(' Calculator', '').replace(' Generator', '')}</span>

@@ -104,7 +104,7 @@ export default function RootLayout({
 
   return (
     <html lang="en">
-      <body className={`${ibmPlexSans.className} antialiased bg-white`} suppressHydrationWarning>
+      <body className={`${ibmPlexSans.className} antialiased`} suppressHydrationWarning>
         {/* Google Analytics */}
         {gaId && (
           <>
