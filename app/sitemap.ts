@@ -2,6 +2,8 @@ import { MetadataRoute } from 'next'
  
 export default function sitemap(): MetadataRoute.Sitemap {
   const baseUrl = 'https://pockettcalculator.com'
+  // Use a fixed date for consistency, but allow updates
+  const lastModified = new Date('2025-01-21')
   
   // Static pages
   const staticPages = [
@@ -33,14 +35,14 @@ export default function sitemap(): MetadataRoute.Sitemap {
   
   const staticEntries = staticPages.map((page) => ({
     url: `${baseUrl}${page}`,
-    lastModified: new Date(),
+    lastModified,
     changeFrequency: 'monthly' as const,
-    priority: page === '' ? 1 : page === '/faq' ? 0.9 : 0.8,
+    priority: page === '' ? 1.0 : page === '/faq' ? 0.9 : 0.8,
   }))
   
   const calculatorEntries = calculatorPages.map((page) => ({
     url: `${baseUrl}${page}`,
-    lastModified: new Date(),
+    lastModified,
     changeFrequency: 'weekly' as const,
     priority: 0.9,
   }))
