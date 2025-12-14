@@ -2,7 +2,7 @@
 
 import React from 'react';
 import Link from 'next/link';
-import { 
+import {
   ChevronRight,
   Calculator,
   Percent,
@@ -54,9 +54,9 @@ const getIconForCalculator = (href: string) => {
   return iconMap[href] || Calculator;
 };
 
-export default function CalculatorLayout({ 
-  title, 
-  description, 
+export default function CalculatorLayout({
+  title,
+  description,
   children,
   relatedCalculators = []
 }: CalculatorLayoutProps) {
@@ -77,18 +77,18 @@ export default function CalculatorLayout({
         <nav className="mb-6" aria-label="Breadcrumb">
           <ol className="flex items-center space-x-2 text-sm">
             <li>
-              <Link 
-                href="/" 
-                className="text-gray-500 hover:text-gray-900 transition-colors font-medium"
+              <Link
+                href="/"
+                className="text-slate-400 hover:text-white transition-colors font-medium"
               >
                 Home
               </Link>
             </li>
-            <li className="text-gray-400">
+            <li className="text-slate-600">
               <ChevronRight className="w-4 h-4" />
             </li>
             <li>
-              <span className="text-gray-900 font-semibold" aria-current="page">
+              <span className="text-violet-300 font-semibold" aria-current="page">
                 {title}
               </span>
             </li>
@@ -103,22 +103,22 @@ export default function CalculatorLayout({
           <div className="lg:col-span-6 space-y-6">
             {/* Page Header */}
             <div className="text-center space-y-3">
-              <h1 className="text-4xl md:text-5xl font-black gradient-text tracking-tight">
+              <h1 className="text-4xl md:text-5xl font-black text-white tracking-tight text-glow">
                 {title}
               </h1>
-              <p className="text-lg text-gray-600 max-w-2xl mx-auto">
+              <p className="text-lg text-slate-400 max-w-2xl mx-auto">
                 {description}
               </p>
             </div>
 
             {/* Calculator Content */}
-            <div className="premium-card rounded-3xl p-6 md:p-8">
+            <div className="glass-panel p-6 md:p-8 rounded-2xl">
               {children}
             </div>
 
             {/* Related Calculators */}
             <div className="space-y-4">
-              <h2 className="text-xl font-bold text-gray-900">Related Calculators</h2>
+              <h2 className="text-xl font-bold text-white">Related Calculators</h2>
               <div className="flex flex-wrap gap-2">
                 {related.map((calc) => {
                   const IconComponent = getIconForCalculator(calc.href);
@@ -126,7 +126,7 @@ export default function CalculatorLayout({
                     <Link
                       key={calc.href}
                       href={calc.href}
-                      className="inline-flex items-center gap-2 px-4 py-2.5 bg-white hover:bg-gray-900 hover:text-white border border-gray-200 hover:border-gray-900 rounded-full text-sm font-semibold text-gray-700 transition-all duration-200 shadow-sm hover:shadow-md"
+                      className="inline-flex items-center gap-2 px-4 py-2.5 bg-slate-800/50 hover:bg-violet-900/50 border border-white/10 hover:border-violet-500/50 rounded-full text-sm font-semibold text-slate-300 hover:text-white transition-all duration-200 shadow-sm hover:shadow-md hover:shadow-violet-500/20"
                     >
                       <IconComponent className="w-4 h-4" />
                       <span>{calc.name}</span>
@@ -140,7 +140,7 @@ export default function CalculatorLayout({
           {/* Right Sidebar - Ad Space */}
           <div className="hidden lg:block lg:col-span-3">
             <div className="sticky top-32">
-              <SidebarAd 
+              <SidebarAd
                 adSlot={process.env.NEXT_PUBLIC_ADSENSE_SIDEBAR_SLOT}
                 count={3}
               />

@@ -24,28 +24,27 @@ export default function FAQ({ items, defaultOpenFirst = false }: FAQProps) {
       {items.map((item, index) => (
         <div
           key={index}
-          className="premium-card rounded-xl overflow-hidden border border-gray-200 hover:border-blue-300 transition-colors"
+          className="glass-panel rounded-xl overflow-hidden border border-violet-500/20 hover:border-cyan-500/30 transition-colors"
         >
           <button
             onClick={() => toggleQuestion(index)}
-            className="w-full px-6 py-4 flex items-center justify-between text-left hover:bg-gray-50 transition-colors"
+            className="w-full px-6 py-4 flex items-center justify-between text-left hover:bg-white/5 transition-colors"
             aria-expanded={openIndex === index}
             aria-controls={`faq-answer-${index}`}
           >
-            <h3 className="text-base font-semibold text-gray-900 pr-4">
+            <h3 className="text-base font-semibold text-slate-200 pr-4">
               {item.question}
             </h3>
             {openIndex === index ? (
-              <ChevronUp className="w-5 h-5 text-blue-600 flex-shrink-0" aria-hidden="true" />
+              <ChevronUp className="w-5 h-5 text-cyan-400 flex-shrink-0" aria-hidden="true" />
             ) : (
-              <ChevronDown className="w-5 h-5 text-gray-400 flex-shrink-0" aria-hidden="true" />
+              <ChevronDown className="w-5 h-5 text-slate-500 flex-shrink-0" aria-hidden="true" />
             )}
           </button>
           <div
             id={`faq-answer-${index}`}
-            className={`px-6 pb-4 text-gray-600 text-sm leading-relaxed transition-all ${
-              openIndex === index ? 'block' : 'hidden'
-            }`}
+            className={`px-6 pb-4 text-slate-400 text-sm leading-relaxed transition-all ${openIndex === index ? 'block' : 'hidden'
+              }`}
             role="region"
             aria-hidden={openIndex !== index}
           >

@@ -7,12 +7,12 @@ interface SidebarAdProps {
    * Ad slot ID for the sidebar ad (300x250)
    */
   adSlot?: string;
-  
+
   /**
    * Additional CSS classes
    */
   className?: string;
-  
+
   /**
    * Show multiple ad units (stacked)
    */
@@ -40,14 +40,14 @@ export default function SidebarAd({
     return (
       <div className={`space-y-6 ${className}`}>
         {Array.from({ length: count }).map((_, index) => (
-          <div 
+          <div
             key={index}
-            className="flex items-center justify-center bg-gray-50 border border-gray-200 rounded"
+            className="flex items-center justify-center bg-white/5 border border-white/10 rounded"
             style={{ minHeight: '250px' }}
           >
             <div className="text-center">
-              <div className="text-xs font-bold text-gray-400 mb-1">Advertisement</div>
-              <div className="text-xs text-gray-400">300x250 - Ad slot not configured</div>
+              <div className="text-xs font-bold text-slate-500 mb-1">Advertisement</div>
+              <div className="text-xs text-slate-600">300x250 - Ad slot not configured</div>
             </div>
           </div>
         ))}
