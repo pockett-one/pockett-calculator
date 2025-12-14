@@ -30,9 +30,9 @@
   "dependencies": {
     "@vercel/analytics": "^1.5.0",
     "lucide-react": "^0.546.0",
-    "next": "^15.1.5",
-    "react": "^19.0.0",
-    "react-dom": "^19.0.0"
+    "next": "^15.5.9",
+    "react": "^19.2.3",
+    "react-dom": "^19.2.3"
   },
   "devDependencies": {
     "@playwright/test": "^1.56.1",
@@ -44,7 +44,7 @@
     "@types/react-dom": "^19",
     "autoprefixer": "^10.4.20",
     "eslint": "^9",
-    "eslint-config-next": "^15.1.5",
+    "eslint-config-next": "^15.5.9",
     "jest": "^30.2.0",
     "jest-environment-jsdom": "^30.2.0",
     "postcss": "^8.4.49",

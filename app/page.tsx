@@ -2,26 +2,25 @@
 
 import Link from 'next/link';
 import { useState, useEffect } from 'react';
-import { 
-  Calculator, 
-  Percent, 
-  PieChart, 
-  Dices, 
-  Triangle, 
-  BarChart3, 
-  Cake, 
-  Calendar, 
-  Clock, 
-  Hourglass, 
-  GraduationCap, 
-  FileText, 
-  Package, 
-  Network, 
-  Lock, 
+import {
+  Binary,
+  Activity,
+  Orbit,
+  Sigma,
+  Shapes,
+  Shuffle,
+  Hourglass,
+  Calendar,
+  Clock,
+  Box,
+  Network,
+  Lock,
   ArrowLeftRight,
-  Zap,
-  CheckCircle,
-  Smartphone
+  Cpu,
+  Terminal,
+  Hash,
+  ChevronRight,
+  Zap
 } from 'lucide-react';
 import CalculatorMenu from './components/CalculatorMenu';
 import StructuredData, { organizationSchema, websiteSchema } from './components/StructuredData';
@@ -35,6 +34,7 @@ export default function Home() {
   const [isDegrees, setIsDegrees] = useState(true);
   const [expression, setExpression] = useState('');
 
+  // ... (Calculator Logic remains the same) ...
   const handleNumber = (num: string) => {
     if (newNumber) {
       setDisplay(num);
@@ -137,49 +137,20 @@ export default function Home() {
     return result;
   };
 
-  // Keyboard input handler
   useEffect(() => {
     const handleKeyDown = (event: KeyboardEvent) => {
       const key = event.key;
-
-      // Prevent default for calculator keys to avoid page scrolling or other browser actions
       if (/^[0-9+\-*/=.]$/.test(key) || key === 'Enter' || key === 'Escape' || key.toLowerCase() === 'c') {
         event.preventDefault();
       }
-
-      // Number keys (0-9)
-      if (/^[0-9]$/.test(key)) {
-        handleNumber(key);
-      }
-
-      // Decimal point
-      else if (key === '.') {
-        handleDecimal();
-      }
-
-      // Operators
-      else if (key === '+') {
-        handleOperation('+');
-      }
-      else if (key === '-') {
-        handleOperation('–');
-      }
-      else if (key === '*') {
-        handleOperation('×');
-      }
-      else if (key === '/') {
-        handleOperation('/');
-      }
-
-      // Equals
-      else if (key === 'Enter' || key === '=') {
-        handleEquals();
-      }
-
-      // Clear
-      else if (key === 'Escape' || key.toLowerCase() === 'c') {
-        handleClear();
-      }
+      if (/^[0-9]$/.test(key)) handleNumber(key);
+      else if (key === '.') handleDecimal();
+      else if (key === '+') handleOperation('+');
+      else if (key === '-') handleOperation('–');
+      else if (key === '*') handleOperation('×');
+      else if (key === '/') handleOperation('/');
+      else if (key === 'Enter' || key === '=') handleEquals();
+      else if (key === 'Escape' || key.toLowerCase() === 'c') handleClear();
     };
 
     window.addEventListener('keydown', handleKeyDown);
@@ -193,277 +164,199 @@ export default function Home() {
     className?: string;
     variant?: 'default' | 'number' | 'operator' | 'function' | 'equals';
   }) => {
-    const variants = {
-      default: 'bg-white hover:bg-gray-50 text-gray-900 border border-gray-200 shadow-sm text-base md:text-lg',
-      number: 'bg-white hover:bg-gray-50 text-gray-900 border border-gray-200 shadow-sm text-base md:text-lg',
-      operator: 'bg-gray-100 hover:bg-gray-200 text-gray-900 border border-gray-300 shadow-sm text-base md:text-lg',
-      function: 'bg-gradient-to-b from-gray-50 to-gray-100 hover:from-gray-100 hover:to-gray-200 text-gray-700 text-xs md:text-sm border border-gray-200 shadow-sm',
-      equals: 'bg-gradient-to-r from-gray-900 to-gray-800 hover:from-gray-800 hover:to-gray-700 text-white border-gray-900 shadow-lg text-base md:text-lg',
+    const variantStyles = {
+      default: 'calc-btn-default',
+      number: 'calc-btn-default text-zinc-100',
+      operator: 'calc-btn-operator',
+      function: 'calc-btn-function',
+      equals: 'calc-btn-equals',
     };
 
     return (
       <button
         onClick={onClick}
-        className={`calc-btn p-3 min-h-[48px] md:min-h-[56px] rounded-lg font-semibold transition-all flex items-center justify-center touch-manipulation select-none ${variants[variant]} ${className}`}
+        className={`calc-btn p-3 min-h-[56px] ${variantStyles[variant]} ${className}`}
       >
         {children}
       </button>
     );
   };
 
-  const mathCalculators = [
-    { name: 'Scientific Calculator', href: '/scientific-calculator', Icon: Calculator },
-    { name: 'Fraction Calculator', href: '/fraction-calculator', Icon: PieChart },
-    { name: 'Percentage Calculator', href: '/percentage-calculator', Icon: Percent },
-    { name: 'Random Number Generator', href: '/random-number-generator', Icon: Dices },
-    { name: 'Triangle Calculator', href: '/triangle-calculator', Icon: Triangle },
-    { name: 'Standard Deviation', href: '/standard-deviation-calculator', Icon: BarChart3 },
-  ];
-
-  const otherCalculators = [
-    { name: 'Age Calculator', href: '/age-calculator', Icon: Cake },
-    { name: 'Date Calculator', href: '/date-calculator', Icon: Calendar },
-    { name: 'Time Calculator', href: '/time-calculator', Icon: Clock },
-    { name: 'Hours Calculator', href: '/hours-calculator', Icon: Hourglass },
-    { name: 'GPA Calculator', href: '/gpa-calculator', Icon: GraduationCap },
-    { name: 'Grade Calculator', href: '/grade-calculator', Icon: FileText },
-    { name: 'Concrete Calculator', href: '/concrete-calculator', Icon: Package },
-    { name: 'Subnet Calculator', href: '/subnet-calculator', Icon: Network },
-    { name: 'Password Generator', href: '/password-generator', Icon: Lock },
-    { name: 'Conversion Calculator', href: '/conversion-calculator', Icon: ArrowLeftRight },
+  // Technical Icons Mapping
+  const tools = [
+    { name: 'Scientific', href: '/scientific-calculator', Icon: Binary, desc: 'Advanced Ops' },
+    { name: 'Fraction', href: '/fraction-calculator', Icon: Shapes, desc: 'Ratios' },
+    { name: 'Percentage', href: '/percentage-calculator', Icon: Sigma, desc: 'Rates' },
+    { name: 'Random', href: '/random-number-generator', Icon: Shuffle, desc: 'Entropy' },
+    { name: 'Triangle', href: '/triangle-calculator', Icon: Orbit, desc: 'Geometry' },
+    { name: 'Statistics', href: '/standard-deviation-calculator', Icon: Activity, desc: 'Analysis' },
+    { name: 'Age', href: '/age-calculator', Icon: Hash, desc: 'Chronology' },
+    { name: 'Date', href: '/date-calculator', Icon: Calendar, desc: 'Scheduling' },
+    { name: 'Time', href: '/time-calculator', Icon: Clock, desc: 'Duration' },
+    { name: 'Hours', href: '/hours-calculator', Icon: Hourglass, desc: 'Tracking' },
+    { name: 'Subnet', href: '/subnet-calculator', Icon: Network, desc: 'IP/CIDR' },
+    { name: 'Password', href: '/password-generator', Icon: Lock, desc: 'Security' },
+    { name: 'Convert', href: '/conversion-calculator', Icon: ArrowLeftRight, desc: 'Units' },
+    { name: 'Concrete', href: '/concrete-calculator', Icon: Box, desc: 'Volume' },
   ];
 
   return (
     <>
-      {/* Structured Data for SEO */}
       <StructuredData data={organizationSchema} />
       <StructuredData data={websiteSchema} />
-      {/* Note: FAQPage schema is only on /faq page to avoid duplicates */}
-      
-      <div className="min-h-screen">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-          <div className="grid lg:grid-cols-12 gap-8">
-            {/* Left Sidebar - Calculator Menu */}
-            <CalculatorMenu />
 
-          {/* Main Content - Scientific Calculator + Content */}
-          <div className="lg:col-span-6 space-y-8">
-      {/* Hero Section */}
-            <div className="text-center space-y-4 py-8">
-              <h1 className="text-5xl md:text-6xl font-black gradient-text tracking-tight">
-                Pockett Calculator
-          </h1>
-              <p className="text-xl text-gray-600 max-w-2xl mx-auto">
-                Lightning-fast, precision calculations at your fingertips. 
-                Professional tools for everyday math.
-              </p>
-        </div>
+      <div className="min-h-screen pb-20">
+        <div className="max-w-[1600px] mx-auto px-4 sm:px-6 lg:px-8 py-8">
+          <div className="grid lg:grid-cols-12 gap-6">
 
-            {/* Featured Scientific Calculator */}
-            <div className="premium-card rounded-3xl p-6 md:p-8 border-2 border-transparent hover:border-blue-200 transition-all duration-300">
-              <div className="text-center mb-6">
-                <div className="inline-block bg-gradient-to-r from-blue-100 to-blue-200 px-4 py-1 rounded-full mb-3">
-                  <span className="text-sm font-bold text-blue-900">Featured Calculator</span>
-                </div>
-                <h2 className="text-2xl font-bold bg-gradient-to-r from-blue-600 to-blue-800 bg-clip-text text-transparent mb-2">Scientific Calculator</h2>
-                <p className="text-sm text-gray-600">Try it now - Full featured calculator with advanced functions</p>
-              </div>
-
-              {/* Calculator Display */}
-              <div className="calc-display mb-6 min-h-[80px] flex flex-col items-end justify-end p-4 relative">
-                <div className="text-sm text-gray-400 mb-1 font-mono h-5">
-                  {expression || '\u00A0'}
-                </div>
-                <div className="text-3xl md:text-4xl font-bold">
-                  {display}
-                </div>
-              </div>
-
-              {/* Scientific Functions */}
-              <div className="grid grid-cols-7 gap-1.5 mb-2">
-                <CalcButton onClick={() => handleScientific('sin')} variant="function">sin</CalcButton>
-                <CalcButton onClick={() => handleScientific('cos')} variant="function">cos</CalcButton>
-                <CalcButton onClick={() => handleScientific('tan')} variant="function">tan</CalcButton>
-                <CalcButton onClick={() => setIsDegrees(!isDegrees)} variant="function">
-                  {isDegrees ? 'Deg' : 'Rad'}
-                </CalcButton>
-                <CalcButton onClick={() => handleScientific('sin⁻¹')} variant="function">sin⁻¹</CalcButton>
-                <CalcButton onClick={() => handleScientific('cos⁻¹')} variant="function">cos⁻¹</CalcButton>
-                <CalcButton onClick={() => handleScientific('tan⁻¹')} variant="function">tan⁻¹</CalcButton>
-              </div>
-
-              <div className="grid grid-cols-7 gap-1.5 mb-2">
-                <CalcButton onClick={() => handleScientific('π')} variant="function">π</CalcButton>
-                <CalcButton onClick={() => handleScientific('e')} variant="function">e</CalcButton>
-                <CalcButton onClick={() => handleOperation('x^y')} variant="function">xʸ</CalcButton>
-                <CalcButton onClick={() => handleScientific('x³')} variant="function">x³</CalcButton>
-                <CalcButton onClick={() => handleScientific('x²')} variant="function">x²</CalcButton>
-                <CalcButton onClick={() => handleScientific('eˣ')} variant="function">eˣ</CalcButton>
-                <CalcButton onClick={() => handleScientific('10ˣ')} variant="function">10ˣ</CalcButton>
-              </div>
-
-              <div className="grid grid-cols-7 gap-1.5 mb-4">
-                <CalcButton onClick={() => handleScientific('√x')} variant="function">√x</CalcButton>
-                <CalcButton onClick={() => handleScientific('∛x')} variant="function">∛x</CalcButton>
-                <CalcButton onClick={() => handleScientific('ln')} variant="function">ln</CalcButton>
-                <CalcButton onClick={() => handleScientific('log')} variant="function">log</CalcButton>
-                <CalcButton onClick={() => {}} variant="function">(</CalcButton>
-                <CalcButton onClick={() => {}} variant="function">)</CalcButton>
-                <CalcButton onClick={() => handleScientific('1/x')} variant="function">1/x</CalcButton>
-              </div>
-
-              {/* Basic Calculator */}
-              <div className="grid grid-cols-5 gap-2">
-                <CalcButton onClick={() => handleScientific('n!')} variant="function">n!</CalcButton>
-                <CalcButton onClick={handleClear} variant="operator">AC</CalcButton>
-                <CalcButton onClick={() => {}} variant="operator">Back</CalcButton>
-                <CalcButton onClick={() => {}} variant="operator">%</CalcButton>
-                <CalcButton onClick={() => handleOperation('/')} variant="operator">/</CalcButton>
-
-                <CalcButton onClick={() => handleNumber('7')} variant="number">7</CalcButton>
-                <CalcButton onClick={() => handleNumber('8')} variant="number">8</CalcButton>
-                <CalcButton onClick={() => handleNumber('9')} variant="number">9</CalcButton>
-                <CalcButton onClick={() => handleOperation('+')} variant="operator">+</CalcButton>
-                <CalcButton onClick={() => {}} variant="operator">M+</CalcButton>
-
-                <CalcButton onClick={() => handleNumber('4')} variant="number">4</CalcButton>
-                <CalcButton onClick={() => handleNumber('5')} variant="number">5</CalcButton>
-                <CalcButton onClick={() => handleNumber('6')} variant="number">6</CalcButton>
-                <CalcButton onClick={() => handleOperation('–')} variant="operator">–</CalcButton>
-                <CalcButton onClick={() => {}} variant="operator">Ans</CalcButton>
-
-                <CalcButton onClick={() => handleNumber('1')} variant="number">1</CalcButton>
-                <CalcButton onClick={() => handleNumber('2')} variant="number">2</CalcButton>
-                <CalcButton onClick={() => handleNumber('3')} variant="number">3</CalcButton>
-                <CalcButton onClick={() => handleOperation('×')} variant="operator">×</CalcButton>
-                <CalcButton onClick={() => {}} variant="operator">M-</CalcButton>
-
-                <CalcButton onClick={() => handleNumber('0')} variant="number">0</CalcButton>
-                <CalcButton onClick={handleDecimal} variant="number">.</CalcButton>
-                <CalcButton onClick={() => {}} variant="number">EXP</CalcButton>
-                <CalcButton onClick={handleEquals} variant="equals">=</CalcButton>
-                <CalcButton onClick={() => {}} variant="operator">MR</CalcButton>
+            {/* Left Sidebar - Menu (3 Cols) */}
+            <div className="hidden lg:block lg:col-span-2 xl:col-span-2">
+              <div className="sticky top-8">
+                <CalculatorMenu />
               </div>
             </div>
 
-            {/* Math Calculators */}
-            <div id="math-calculators" className="space-y-6">
-              <div className="flex items-center gap-4">
-                <div className="h-1 w-12 bg-gradient-to-r from-blue-400 to-blue-600 rounded-full"></div>
-                <div>
-                  <h2 className="text-3xl font-bold bg-gradient-to-r from-blue-600 to-blue-800 bg-clip-text text-transparent mb-1">Math Calculators</h2>
-                  <p className="text-gray-600">Advanced mathematical tools for complex calculations</p>
-                </div>
-              </div>
-              <div className="flex flex-wrap gap-2">
-                {mathCalculators.map((calc) => (
-                  <Link
-                    key={calc.href}
-                    href={calc.href}
-                    className="inline-flex items-center gap-2 px-4 py-2.5 bg-white hover:bg-gradient-to-r hover:from-blue-500 hover:to-blue-600 hover:text-white border border-gray-200 hover:border-blue-500 rounded-full text-sm font-semibold text-gray-700 transition-all duration-200 shadow-sm hover:shadow-lg hover:scale-105"
-                  >
-                    <calc.Icon className="w-4 h-4" />
-                    <span>{calc.name}</span>
-            </Link>
-                ))}
-              </div>
-            </div>
+            {/* Main Content (7 Cols) */}
+            <div className="lg:col-span-7 xl:col-span-7 space-y-8">
 
-            {/* Other Calculators */}
-            <div id="other-calculators" className="space-y-6">
-              <div className="flex items-center gap-4">
-                <div className="h-1 w-12 bg-gradient-to-r from-red-300 to-red-500 rounded-full"></div>
-                <div>
-                  <h2 className="text-3xl font-bold bg-gradient-to-r from-red-500 to-red-700 bg-clip-text text-transparent mb-1">Other Calculators</h2>
-                  <p className="text-gray-600">Everyday tools for practical calculations</p>
+              {/* Tech Hero */}
+              <div className="border-b border-violet-500/20 pb-8 mb-8">
+                <div className="flex items-center gap-2 text-cyan-400 font-mono text-xs uppercase tracking-widest mb-2">
+                  <Terminal className="w-4 h-4" />
+                  <span>System Ready</span>
                 </div>
+                <h1 className="text-4xl md:text-6xl font-bold text-white tracking-tighter mb-4">
+                  Pockett <span className="text-violet-500">/</span> Engine
+                </h1>
+                <p className="text-slate-400 max-w-xl font-mono text-sm leading-relaxed">
+                  High-precision calculation suite. Optimized for developers, engineers, and data analysis. Zero latency.
+                </p>
               </div>
-              <div className="flex flex-wrap gap-2">
-                {otherCalculators.map((calc) => (
-                  <Link
-                    key={calc.href}
-                    href={calc.href}
-                    className="inline-flex items-center gap-2 px-4 py-2.5 bg-white hover:bg-gradient-to-r hover:from-red-400 hover:to-red-500 hover:text-white border border-gray-200 hover:border-red-400 rounded-full text-sm font-semibold text-gray-700 transition-all duration-200 shadow-sm hover:shadow-lg hover:scale-105"
-                  >
-                    <calc.Icon className="w-4 h-4" />
-                    <span>{calc.name}</span>
-            </Link>
-                ))}
-          </div>
-        </div>
 
-      {/* Features Section */}
-            <div id="features" className="premium-card rounded-3xl p-8 space-y-8 bg-gradient-to-br from-white via-blue-50/30 to-red-50/30">
-              <h2 className="text-3xl font-bold text-gray-900 text-center">Why Choose Pockett Calculator?</h2>
-              <div className="grid md:grid-cols-3 gap-8">
-                <div className="text-center space-y-3 group">
-                  <div className="feature-icon mx-auto bg-gradient-to-br from-blue-100 to-blue-200 group-hover:from-blue-500 group-hover:to-blue-600 transition-all duration-300">
-                    <Zap className="w-8 h-8 text-blue-700 group-hover:text-white transition-colors duration-300" />
+              {/* Main Calculator - Cyber Deck Style */}
+              <div className="glass-panel rounded-xl p-1 border-violet-500/20 bg-slate-900/30">
+                <div className="bg-slate-950/50 rounded-lg p-6 border border-violet-500/10">
+                  <div className="flex justify-between items-center mb-6 border-b border-violet-500/10 pb-4">
+                    <div className="flex items-center gap-2">
+                      <div className="w-2 h-2 bg-cyan-500 rounded-full animate-pulse"></div>
+                      <span className="text-xs font-mono text-cyan-400/70 uppercase">Scientific Mode</span>
+                    </div>
+                    <Cpu className="w-4 h-4 text-violet-400/50" />
                   </div>
-                  <h3 className="text-lg font-bold text-gray-900">Lightning Fast</h3>
-                  <p className="text-sm text-gray-600">Instant calculations with zero lag</p>
-                </div>
-                <div className="text-center space-y-3 group">
-                  <div className="feature-icon mx-auto bg-gradient-to-br from-red-100 to-red-200 group-hover:from-red-400 group-hover:to-red-500 transition-all duration-300">
-                    <CheckCircle className="w-8 h-8 text-red-700 group-hover:text-white transition-colors duration-300" />
-                  </div>
-                  <h3 className="text-lg font-bold text-gray-900">100% Accurate</h3>
-                  <p className="text-sm text-gray-600">Precision you can trust</p>
-                </div>
-                <div className="text-center space-y-3 group">
-                  <div className="feature-icon mx-auto bg-gradient-to-br from-blue-100 to-blue-200 group-hover:from-blue-500 group-hover:to-blue-600 transition-all duration-300">
-                    <Smartphone className="w-8 h-8 text-blue-700 group-hover:text-white transition-colors duration-300" />
-                  </div>
-                  <h3 className="text-lg font-bold text-gray-900">Mobile Ready</h3>
-                  <p className="text-sm text-gray-600">Works perfectly on any device</p>
-                </div>
-              </div>
-            </div>
 
-            {/* FAQ Section */}
-            <div id="faq" className="space-y-6">
-              <div className="flex items-center justify-between">
-                <div className="flex items-center gap-4">
-                  <div className="h-1 w-12 bg-gradient-to-r from-green-400 to-green-600 rounded-full"></div>
-                  <div>
-                    <h2 className="text-3xl font-bold bg-gradient-to-r from-green-600 to-green-800 bg-clip-text text-transparent mb-1">Frequently Asked Questions</h2>
-                    <p className="text-gray-600">Quick answers to common calculator questions</p>
+                  {/* Display */}
+                  <div className="calc-display rounded-sm border-violet-500/20 bg-black/40">
+                    <div className="text-xs text-slate-400 mb-1 font-mono h-4 flex justify-end">
+                      {expression}
+                    </div>
+                    <div className="text-3xl font-mono text-cyan-400 text-glow">
+                      {display}
+                    </div>
+                  </div>
+
+                  {/* Keypad */}
+                  <div className="grid gap-2">
+                    <div className="grid grid-cols-7 gap-1 mb-2">
+                      <CalcButton onClick={() => handleScientific('sin')} variant="function">sin</CalcButton>
+                      <CalcButton onClick={() => handleScientific('cos')} variant="function">cos</CalcButton>
+                      <CalcButton onClick={() => handleScientific('tan')} variant="function">tan</CalcButton>
+                      <CalcButton onClick={() => setIsDegrees(!isDegrees)} variant="function" className="text-[10px]">
+                        {isDegrees ? 'DEG' : 'RAD'}
+                      </CalcButton>
+                      <CalcButton onClick={() => handleScientific('sin⁻¹')} variant="function">sin⁻¹</CalcButton>
+                      <CalcButton onClick={() => handleScientific('cos⁻¹')} variant="function">cos⁻¹</CalcButton>
+                      <CalcButton onClick={() => handleScientific('tan⁻¹')} variant="function">tan⁻¹</CalcButton>
+                    </div>
+
+                    <div className="grid grid-cols-5 gap-2">
+                      <div className="col-span-4 grid grid-cols-4 gap-2">
+                        <CalcButton onClick={handleClear} variant="operator" className="text-red-400">CLR</CalcButton>
+                        <CalcButton onClick={() => { }} variant="operator">DEL</CalcButton>
+                        <CalcButton onClick={() => handleOperation('/')} variant="operator">÷</CalcButton>
+                        <CalcButton onClick={() => handleOperation('×')} variant="operator">×</CalcButton>
+
+                        <CalcButton onClick={() => handleNumber('7')} variant="number">7</CalcButton>
+                        <CalcButton onClick={() => handleNumber('8')} variant="number">8</CalcButton>
+                        <CalcButton onClick={() => handleNumber('9')} variant="number">9</CalcButton>
+                        <CalcButton onClick={() => handleOperation('–')} variant="operator">–</CalcButton>
+
+                        <CalcButton onClick={() => handleNumber('4')} variant="number">4</CalcButton>
+                        <CalcButton onClick={() => handleNumber('5')} variant="number">5</CalcButton>
+                        <CalcButton onClick={() => handleNumber('6')} variant="number">6</CalcButton>
+                        <CalcButton onClick={() => handleOperation('+')} variant="operator">+</CalcButton>
+
+                        <CalcButton onClick={() => handleNumber('1')} variant="number">1</CalcButton>
+                        <CalcButton onClick={() => handleNumber('2')} variant="number">2</CalcButton>
+                        <CalcButton onClick={() => handleNumber('3')} variant="number">3</CalcButton>
+                        <CalcButton onClick={handleEquals} variant="equals" className="row-span-2">=</CalcButton>
+
+                        <CalcButton onClick={() => handleNumber('0')} variant="number" className="col-span-2">0</CalcButton>
+                        <CalcButton onClick={handleDecimal} variant="number">.</CalcButton>
+                      </div>
+                      <div className="grid grid-cols-1 gap-2">
+                        <CalcButton onClick={() => handleScientific('π')} variant="function">π</CalcButton>
+                        <CalcButton onClick={() => handleScientific('e')} variant="function">e</CalcButton>
+                        <CalcButton onClick={() => handleScientific('√x')} variant="function">√</CalcButton>
+                        <CalcButton onClick={() => handleScientific('x²')} variant="function">x²</CalcButton>
+                        <CalcButton onClick={() => handleOperation('x^y')} variant="function">xʸ</CalcButton>
+                      </div>
+                    </div>
                   </div>
                 </div>
               </div>
-              <FAQ items={commonCalculatorFAQs.slice(0, 6)} />
-              <div className="text-center pt-4">
-                <Link
-                  href="/faq"
-                  className="inline-flex items-center gap-2 px-6 py-3 bg-gradient-to-r from-green-500 to-green-600 text-white font-semibold rounded-xl hover:from-green-600 hover:to-green-700 transition-all shadow-md hover:shadow-lg"
-                >
-                  View All {commonCalculatorFAQs.length} Questions
-                  <ArrowLeftRight className="w-5 h-5 rotate-90" />
-                </Link>
-              </div>
-            </div>
-            </div>
 
-          {/* Right Sidebar - Ad Space */}
-          <div className="hidden lg:block lg:col-span-3">
-            <div className="sticky top-24 space-y-6">
-              <div className="ad-slot" style={{ minHeight: '250px' }}>
-            <div className="text-center">
-                  <div className="text-xs font-bold text-gray-400 mb-1">Advertisement</div>
-                  <div className="text-xs text-gray-400">300x250</div>
+              {/* Bento Grid Tools */}
+              <div>
+                <div className="flex items-center justify-between mb-6">
+                  <h2 className="text-lg font-bold text-white flex items-center gap-2">
+                    <Box className="w-5 h-5 text-violet-500" />
+                    Tool Matrix
+                  </h2>
+                </div>
+
+                <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
+                  {tools.map((tool) => (
+                    <Link key={tool.href} href={tool.href} className="group">
+                      <div className="glass-panel p-4 h-full flex flex-col justify-between min-h-[120px]">
+                        <div className="flex justify-between items-start">
+                          <tool.Icon className="w-6 h-6 text-slate-400 group-hover:text-cyan-400 transition-colors" />
+                          <ChevronRight className="w-4 h-4 text-slate-600 group-hover:text-white" />
+                        </div>
+                        <div>
+                          <div className="text-xs font-mono text-slate-500 mb-1">{tool.desc}</div>
+                          <div className="font-semibold text-slate-200 group-hover:text-white">{tool.name}</div>
+                        </div>
+                      </div>
+                    </Link>
+                  ))}
                 </div>
               </div>
-              <div className="ad-slot" style={{ minHeight: '250px' }}>
-                <div className="text-center">
-                  <div className="text-xs font-bold text-gray-400 mb-1">Advertisement</div>
-                  <div className="text-xs text-gray-400">300x250</div>
+
+              {/* FAQ Section */}
+              <div className="pt-8 border-t border-violet-500/20">
+                <h2 className="text-xl font-bold text-white mb-6">System FAQ</h2>
+                <div className="glass-panel rounded-xl p-6">
+                  <FAQ items={commonCalculatorFAQs.slice(0, 4)} />
+                </div>
+              </div>
+
             </div>
+
+            {/* Right Sidebar - Ads (3 Cols) */}
+            <div className="hidden lg:block lg:col-span-3 xl:col-span-3">
+              <div className="sticky top-8 space-y-6">
+                <div className="ad-slot-nebula h-[250px] w-full rounded-lg">
+                  <span>Ad Space 300x250</span>
+                </div>
+                <div className="ad-slot-nebula h-[600px] w-full rounded-lg">
+                  <span>Ad Space 300x600</span>
+                </div>
               </div>
             </div>
+
           </div>
         </div>
       </div>
-    </div>
     </>
   );
 }
