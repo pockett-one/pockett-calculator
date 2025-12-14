@@ -252,27 +252,31 @@ const calculatorSEO: Record<string, CalculatorSEOConfig> = {
 
 export function getCalculatorMetadata(calculatorKey: string): Metadata {
   const config = calculatorSEO[calculatorKey];
+  const baseUrl = 'https://pockettcalculator.com';
   
   if (!config) {
     return {};
   }
   
+  const fullUrl = `${baseUrl}${config.slug}`;
+  
   return {
+    metadataBase: new URL(baseUrl),
     title: `${config.name} - Free Online Calculator | Pockett Calculator`,
     description: config.description,
     keywords: config.longTailKeywords.join(", "),
     alternates: {
-      canonical: config.slug,
+      canonical: fullUrl,
     },
     openGraph: {
       title: `${config.name} - Free Online Calculator`,
       description: config.description,
-      url: `https://pockettcalculator.com${config.slug}`,
+      url: fullUrl,
       siteName: 'Pockett Calculator',
       type: 'website',
       images: [
         {
-          url: `/og${config.slug}.png`,
+          url: `${baseUrl}/og${config.slug}.png`,
           width: 1200,
           height: 630,
           alt: `${config.name} - Pockett Calculator`,
@@ -283,11 +287,18 @@ export function getCalculatorMetadata(calculatorKey: string): Metadata {
       card: 'summary_large_image',
       title: `${config.name} - Free Online Calculator`,
       description: config.description,
-      images: [`/og${config.slug}.png`],
+      images: [`${baseUrl}/og${config.slug}.png`],
     },
     robots: {
       index: true,
       follow: true,
+      googleBot: {
+        index: true,
+        follow: true,
+        'max-video-preview': -1,
+        'max-image-preview': 'large',
+        'max-snippet': -1,
+      },
     },
   };
 }
